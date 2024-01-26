@@ -1,0 +1,53 @@
+{
+    "name": "RepairShopr+",
+    "description": "RepairShopr service extension for increased functionality and QOL fixes.",
+    "version": "1.4",
+    "manifest_version": 3,
+    "icons": {
+        "16": "/assets/icon-16x16.png",
+        "32": "/assets/icon-32x32.png",
+        "48": "/assets/icon-48x48.png",
+        "128": "/assets/icon-128x128.png"
+    },
+    "content_scripts": [
+        {
+            "matches": ["https://*.repairshopr.com/tickets"],
+            "js": ["tickets.js"],
+            "css": ["tickets.css"]
+        },
+        {
+            "matches": ["https://*.repairshopr.com/tickets/0*",
+                        "https://*.repairshopr.com/tickets/1*",
+                        "https://*.repairshopr.com/tickets/2*",
+                        "https://*.repairshopr.com/tickets/3*",
+                        "https://*.repairshopr.com/tickets/4*",
+                        "https://*.repairshopr.com/tickets/5*",
+                        "https://*.repairshopr.com/tickets/6*",
+                        "https://*.repairshopr.com/tickets/7*",
+                        "https://*.repairshopr.com/tickets/8*",
+                        "https://*.repairshopr.com/tickets/9*"
+                        ],
+            "js": ["ticket_page.js"]
+        },
+        {
+            "matches": ["https://*.repairshopr.com/registers/*/close",
+                        "https://*.repairshopr.com/registers/*/open"
+                        ],
+            "js": ["pos.js"],
+            "css": ["pos.css"]
+        }
+    ],
+    "action": {
+        "default_title": "RepairShopr+ Settings",
+        "default_popup": "popup.html"
+    },
+    "permissions": [
+        "storage", "tabs"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": ["/assets/link_black.png", "/assets/link_white.png"],
+            "matches": ["<all_urls>"]
+        }
+    ]
+}

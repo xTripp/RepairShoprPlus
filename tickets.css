@@ -1,0 +1,43 @@
+.qlButton {
+    height: 24px;
+    width: 24px;
+    vertical-align: middle;
+    background-size: contain;
+    border: none;
+    border-radius: 4px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.tooltip-container {
+    position: relative;
+    display: inline-block;
+    margin-left: 0 !important;
+    padding-left: 5px;
+}
+
+.tooltip-text {
+    visibility: hidden;
+    position: absolute;
+    top: 100%;
+    right: 30%;
+    z-index: 1;
+    background-color: #363636;
+    color: white;
+    border-radius: 4px;
+    padding: 5px;
+    min-width: 200px;
+    text-align: left;
+    font-family: 'Helvetica';
+    font-size: 14px;
+    font-weight: normal;
+    text-transform: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+    cursor: default;
+}
+
+.tooltip-container:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
