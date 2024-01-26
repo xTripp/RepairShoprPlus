@@ -1,4 +1,4 @@
-# RepairShoprPlus
+# RepairShopr+ Chrome Extension
 This extension makes changes to how the RepairShopr System functions and adds new features and improvements.
 
 ---> CURRENT VERSION V1.4 <---
