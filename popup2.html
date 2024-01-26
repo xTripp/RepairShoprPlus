@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="popup2.css">
+</head>
+<body>
+    <div class="header">
+        <img id="logo" src="/assets/RS+.png">
+        <h3>RepairShopr+ Settings</h3>
+    </div>
+    <div class="tabs">
+        <div class="tab" onclick="showTab('tickets')">Tickets</div>
+        <div class="tab" onclick="showTab('pos')">POS</div>
+
+        <div class="tab-content" id="tickets-content">
+            <table>
+                <p>test</p>
+            </table>
+        </div>
+
+        <div class="tab-content" id="pos-content">
+            <table>
+                <p>test2</p>
+            </table>
+        </div>
+    </div>
+
+    <div class="footer">
+        <button id="apply">APPLY</button>
+    </div>
+    <script src="popup.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            showTab('tickets');
+        });
+
+        function showTab(tabId) {
+            var tabContents = document.getElementsByClassName('tab-content');
+            for (var i = 0; i < tabContents.length; i++) {
+                tabContents[i].style.display = 'none';
+            }
+
+            document.getElementById(tabId + '-content').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

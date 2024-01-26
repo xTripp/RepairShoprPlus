@@ -17,7 +17,7 @@ function (result) {
         hundreds
     } = result;
     
-    // countElements contains all input boxes on the page. 11 and 12 in countElements is the card and quick input boxes if present.
+    // countElements contains all input boxes on the page. Indexes 11 and 12 in countElements is the card and quick input boxes if present.
     const countElements = document.querySelectorAll('input[id^="register"].string.optional.form-control');
     const counts = {
         pennies: pennies,
