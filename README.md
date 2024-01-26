@@ -2,6 +2,7 @@
 This extension makes changes to how the RepairShopr System functions and adds new features and improvements.
 
 ---> CURRENT VERSION V1.4 <---
+
 V 1.4 (1/25/24):
 - NEW FEATURE: POS Open/Close History
   - This will display cash the register opened/closed with and adds an active variance calculator while inputting data
