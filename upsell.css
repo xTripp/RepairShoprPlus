@@ -42,6 +42,11 @@ td {
     padding: 5px 20px;
 }
 
+.create-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 
 .Btn {
@@ -96,9 +101,9 @@ td {
   /* hover effect button's text */
   .Btn:hover .text {
     opacity: 1;
-    width: 70%;
+    width: 60%;
     transition-duration: .3s;
-    padding-right: 20px;
+    padding-right: 10px;
   }
   /* button click effect*/
   .Btn:active {
