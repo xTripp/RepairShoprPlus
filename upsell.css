@@ -43,18 +43,18 @@ td {
 }
 
 .create-row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  border: none;
+  margin: 0;
 }
 
 
-.Btn {
+.add-button {
     display: flex;
     align-items: center;
     justify-content: flex-start;
     width: 45px;
     height: 45px;
+    margin: 0 auto;
     border: none;
     border-radius: 0px;
     cursor: pointer;
@@ -63,10 +63,10 @@ td {
     transition-duration: .3s;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
     background-color: black;
-  }
-  
-  /* plus sign */
-  .sign {
+}
+
+
+.sign {
     width: 100%;
     font-size: 2em;
     color: white;
@@ -74,9 +74,9 @@ td {
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-  /* text */
-  .text {
+}
+
+.text {
     position: absolute;
     right: 0%;
     width: 0%;
@@ -85,27 +85,27 @@ td {
     font-size: 1.2em;
     font-weight: 500;
     transition-duration: .3s;
-  }
-  /* hover effect on button width */
-  .Btn:hover {
+}
+
+.add-button:hover {
     width: 125px;
     border-radius: 0px;
     transition-duration: .3s;
-  }
-  
-  .Btn:hover .sign {
+}
+
+.add-button:hover .sign {
     width: 30%;
     transition-duration: .3s;
     padding-left: 20px;
-  }
-  /* hover effect button's text */
-  .Btn:hover .text {
+}
+
+.add-button:hover .text {
     opacity: 1;
     width: 60%;
     transition-duration: .3s;
     padding-right: 10px;
-  }
-  /* button click effect*/
-  .Btn:active {
+}
+
+.add-button:active {
     transform: translate(2px ,2px);
-  }
+}
