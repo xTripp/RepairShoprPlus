@@ -21,15 +21,25 @@
         </thead>
         <tbody>
             <tr>
-                <td>Tempered Glass Screen Protector</td>
-                <td>109120938</td>
                 <td>
-                    <button class="deleteButton">⨯</button>
+                    <div class="input-wrapper">
+                        <input class="input-box" type="text" placeholder="Item name (will display in the add/view charges window)">
+                        <span class="underline"></span>
+                    </div>
+                </td>
+                <td>
+                    <div class="input-wrapper">
+                        <input class="input-box" type="text" placeholder="UPC Code (internal code assigned to the item)">
+                        <span class="underline"></span>
+                    </div>
+                </td>
+                <td>
+                    <button class="action-button create">⨯</button>
                 </td>
             </tr>
             <tr>
                 <td class="create-row" colspan="2">
-                    <button class="add-button">
+                    <button class="add-button" id="addButton">
                         <div class="sign">+</div>
                         <div class="text">Add</div>
                     </button>
