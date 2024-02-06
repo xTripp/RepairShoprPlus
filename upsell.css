@@ -26,7 +26,6 @@ h1, h2 {
 
 table, th, td {
     margin: 40px;
-    border: 2px solid whitesmoke;
     border-collapse: collapse;
 }
 
@@ -37,17 +36,28 @@ th {
 }
 
 td {
+    border: 2px solid whitesmoke;
     font-size: 18px;
     color: whitesmoke;
     padding: 5px 20px;
 }
 
+.name-head,
+.upc-head {
+    border: 2px solid whitesmoke;
+}
+
 .create-row {
-  border: none;
-  margin: 0;
+    margin: 0;
+}
+
+td:nth-child(3n) {
+    border: none;
+    padding: 5px;
 }
 
 
+/** Add button */
 .add-button {
     display: flex;
     align-items: center;
@@ -69,7 +79,7 @@ td {
 .sign {
     width: 100%;
     font-size: 2em;
-    color: white;
+    color: whitesmoke;
     transition-duration: .3s;
     display: flex;
     align-items: center;
@@ -81,7 +91,7 @@ td {
     right: 0%;
     width: 0%;
     opacity: 0;
-    color: white;
+    color: whitesmoke;
     font-size: 1.2em;
     font-weight: 500;
     transition-duration: .3s;
@@ -108,4 +118,33 @@ td {
 
 .add-button:active {
     transform: translate(2px ,2px);
+}
+
+/** Delete button */
+.deleteButton {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    font-size: 2em;
+    color: whitesmoke;
+    background-color: transparent;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+
+.deleteButton:hover {
+    background-color: rgb(237, 56, 56);
+    overflow: visible;
+}
+
+.deleteButton:active {
+    transform: scale(0.92);
 }
