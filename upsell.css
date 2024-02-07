@@ -196,3 +196,26 @@ td:nth-child(3n) {
 .input-box:focus + .underline {
     transform: scaleX(1);
 }
+
+.invalid {
+    animation: shake 0.14s 3;
+}
+
+@keyframes shake {
+    0%, 100% {
+      translate: 0;
+    }
+
+    25% {
+      translate: 8px 0;
+    }
+
+    75% {
+      translate: -8px 0;
+    }
+}
+
+.input-box.invalid-placeholder::placeholder {
+    color: red;
+    font-weight: 600;
+}
