@@ -1,51 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="upsell.css">
-    <title>RepairShopr+ Configuration</title>
-</head>
-<body>
-    <div class="header">
-        <img id="logo" src="/assets/RS+.png">
-        <h1>RepairShopr+ Configuration</h1>
-        <h2 id="current-config">Upsell Opportunities</h2>
-    </div>
-    <table id="upsell-items">
-        <thead>
-            <tr>
-                <th class="name-head">Item Name</th>
-                <th class="upc-head">Item UPC</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>
-                    <div class="input-wrapper">
-                        <input class="input-box" type="text" placeholder="Item name (will display in the add/view charges window)">
-                        <span class="underline"></span>
-                    </div>
-                </td>
-                <td>
-                    <div class="input-wrapper">
-                        <input class="input-box" type="text" placeholder="UPC Code (internal code assigned to the item)">
-                        <span class="underline"></span>
-                    </div>
-                </td>
-                <td>
-                    <button class="action-button create">⨯</button>
-                </td>
-            </tr>
-            <tr>
-                <td class="create-row" colspan="2">
-                    <button class="add-button" id="addButton">
-                        <div class="sign">+</div>
-                        <div class="text">Add</div>
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="upsell.css">
+        <title>RepairShopr+ Configuration</title>
+    </head>
+    <body>
+        <div class="header">
+            <img id="logo" src="/assets/RS+.png">
+            <h1>RepairShopr+ Configuration</h1>
+            <h2 id="current-config">Upsell Opportunities</h2>
+        </div>
+        <table id="upsell-items">
+            <thead>
+                <tr>
+                    <th class="name-head">Item Name</th>
+                    <th class="upc-head">Item UPC</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="anchor">
+                    <td class="create-row" colspan="2">
+                        <button class="add-button" id="addButton">
+                            <div class="sign">+</div>
+                            <div class="text">Add</div>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <script src="./upsell.js"></script>
+    </body>
 </html>

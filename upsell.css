@@ -30,6 +30,7 @@ table, th, td {
 }
 
 th {
+    min-width: 382px;
     font-size: 24px;
     padding: 10px 20px;
     color: whitesmoke;
