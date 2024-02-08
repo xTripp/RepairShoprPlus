@@ -10,7 +10,7 @@ class Item {
         this.removeItem = this.removeItem.bind(this);
     }
 
-    create() {
+    create(itemValue, upcValue) {
         const action = document.createElement('td');
     
         const itemInputWrapper = document.createElement('div');
@@ -46,6 +46,12 @@ class Item {
         this.row.appendChild(action);
     
         document.querySelector('tbody').insertBefore(this.row, tableAnchor);
+
+        if (itemValue && upcValue) {
+            this.itemInputBox.value = itemValue;
+            this.upcInputBox.value = upcValue;
+            this.actionButton.click();
+        }
     }
 
     // Character limit?
@@ -97,8 +103,7 @@ class Item {
 
 
 // ENTRY POINT
-// add this back when save and load is working properly
-//document.addEventListener('DOMContentLoaded', loadState);
+document.addEventListener('DOMContentLoaded', loadState);
 
 const itemTable = document.getElementById('upsell-items');
 const tableAnchor = document.getElementById('anchor');
@@ -112,11 +117,13 @@ function createItem() {
     }
 }
 
-// will have to use addItem() for each element in items to add them to the table properly. modify addItem() to take parameters
 function loadState() {
-    let items;
     chrome.storage.local.get(['items'], function(result) {
-        items = result.items;
+        const items = result.items;
+
+        if (items) {
+            Object.keys(items).forEach(item => new Item().create(items[item]['item'], items[item]['upc']));
+        }
     });
 }
 
@@ -127,17 +134,17 @@ function saveState() {
         upc: row.cells[1].textContent
     }));
 
-    chrome.storage.local.set({items: JSON.stringify(items)});
+    chrome.storage.local.set({items: items});
 }
 
 
-var row;
+let row;
 function dragStart(event) {  
     row = event.target; 
 }
 
 function dragOver(event) {
-    var e = event;
+    const e = event;
     e.preventDefault(); 
 
     let children = Array.from(e.target.parentNode.parentNode.children);

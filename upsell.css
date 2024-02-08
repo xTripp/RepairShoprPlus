@@ -1,4 +1,10 @@
+@font-face {
+    font-family: 'Gotham';
+    src: url("./assets/fonts/gotham.ttf");
+}
+
 body {
+    font-family: 'Gotham';
     background-color: #4e4e4e;
     margin: 0;
 }
@@ -10,6 +16,14 @@ h1, h2 {
     margin: 5px;
 }
 
+h1 {
+    font-size: 32px;
+}
+
+h2 {
+    font-size: 18px;
+}
+
 #logo {
     height: 48px;
     width: 48px;
@@ -18,7 +32,7 @@ h1, h2 {
 }
 
 .header{
-    height: fit min-content;
+    height: min-content;
     display: flex;
     align-items: flex-end;
     background-color: #1f1f1f;
@@ -36,6 +50,14 @@ th {
     color: whitesmoke;
 }
 
+tr:nth-child(odd) {
+    background-color: #414141;
+}
+
+tr:last-child {
+    background-color: #4e4e4e;
+}
+
 td {
     border: 2px solid whitesmoke;
     font-size: 18px;
@@ -46,6 +68,7 @@ td {
 td:nth-child(3n) {
     border: none;
     padding: 5px;
+    background-color: #4e4e4e;
 }
 
 .name-head,
@@ -93,6 +116,7 @@ td:nth-child(3n) {
     width: 0%;
     opacity: 0;
     color: whitesmoke;
+    font-family: 'Gotham';
     font-size: 1.2em;
     font-weight: 500;
     transition-duration: .3s;
@@ -162,6 +186,7 @@ td:nth-child(3n) {
 }
 
 .input-box {
+    font-family: 'Gotham';
     font-size: 16px;
     padding: 2px 0;
     border: none;
