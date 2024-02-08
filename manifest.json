@@ -12,8 +12,8 @@
     "content_scripts": [
         {
             "matches": ["https://*.repairshopr.com/tickets"],
-            "js": ["tickets.js"],
-            "css": ["tickets.css"]
+            "js": ["tickets.js", "charges.js"],
+            "css": ["tickets.css", "charges.css", "checkbox.css"]
         },
         {
             "matches": ["https://*.repairshopr.com/tickets/0*",
@@ -27,14 +27,15 @@
                         "https://*.repairshopr.com/tickets/8*",
                         "https://*.repairshopr.com/tickets/9*"
                         ],
-            "js": ["ticket_page.js"]
+            "js": ["ticket_page.js", "charges.js"],
+            "css": ["charges.css", "checkbox.css"]
         },
         {
             "matches": ["https://*.repairshopr.com/registers/*/close",
                         "https://*.repairshopr.com/registers/*/open"
                         ],
             "js": ["pos.js"],
-            "css": ["pos.css"]
+            "css": ["checkbox.css"]
         }
     ],
     "action": {

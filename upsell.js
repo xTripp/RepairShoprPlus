@@ -1,11 +1,13 @@
 class Item {
     constructor() {
+        // initialize all class variables for class scope access
         this.row = document.createElement('tr');
         this.name = document.createElement('td');
         this.upc = document.createElement('td');
         this.itemInputBox = document.createElement('input');
         this.upcInputBox = document.createElement('input');
         this.actionButton = document.createElement('button');
+
         this.addItem = this.addItem.bind(this);
         this.removeItem = this.removeItem.bind(this);
     }
@@ -13,6 +15,7 @@ class Item {
     create(itemValue, upcValue) {
         const action = document.createElement('td');
     
+        // build item input text box with all classes and attributes
         const itemInputWrapper = document.createElement('div');
         itemInputWrapper.classList.add('input-wrapper');
         this.itemInputBox.classList.add('input-box');
@@ -23,6 +26,7 @@ class Item {
         itemInputWrapper.appendChild(this.itemInputBox);
         itemInputWrapper.appendChild(itemInputUnderline);
     
+        // build upc input text box with all classes and attributes
         const upcInputWrapper = document.createElement('div');
         upcInputWrapper.classList.add('input-wrapper');
         this.upcInputBox.classList.add('input-box');
@@ -47,6 +51,7 @@ class Item {
     
         document.querySelector('tbody').insertBefore(this.row, tableAnchor);
 
+        // This will trigger if parameters are supplied to this function. itemValue and upcValue will be immediately added as a new table item.
         if (itemValue && upcValue) {
             this.itemInputBox.value = itemValue;
             this.upcInputBox.value = upcValue;
@@ -72,6 +77,7 @@ class Item {
             this.row.addEventListener('dragover', dragOver);
             this.row.addEventListener('dragend', dragEnd);
         } else {
+            // if the item input box is empty, this will prevent the item from being added
             if (this.itemInputBox.value.trim() == '') {
                 this.itemInputBox.classList.add('invalid');
                 this.itemInputBox.addEventListener('animationend', function() {
@@ -81,6 +87,7 @@ class Item {
                 this.itemInputBox.classList.add('invalid-placeholder');
                 this.itemInputBox.setAttribute('placeholder', 'Item name is a required field');
             }
+            // if the upc input box is empty, this will prevent the item from being added
             if (this.upcInputBox.value.trim() == '') {
                 this.upcInputBox.classList.add('invalid');
                 this.upcInputBox.addEventListener('animationend', function() {
@@ -111,6 +118,7 @@ const addButton = document.getElementById('addButton');
 addButton.addEventListener('click', createItem);
 
 function createItem() {
+    // if a row is still being created, do not create another one
     if (!document.querySelector('.create')) {
         const item = new Item();
         item.create();
@@ -121,6 +129,7 @@ function loadState() {
     chrome.storage.local.get(['items'], function(result) {
         const items = result.items;
 
+        // This will run through all items saved the previous session and recreate them in order so that it always appears the same
         if (items) {
             Object.keys(items).forEach(item => new Item().create(items[item]['item'], items[item]['upc']));
         }
@@ -128,6 +137,7 @@ function loadState() {
 }
 
 function saveState() {
+    // select all rows with items and save each item and upc pair to a json element
     const itemRows = Array.from(itemTable.querySelectorAll('tr')).slice(1, -1);
     const items = itemRows.map(row => ({
         item: row.cells[0].textContent,
@@ -137,7 +147,7 @@ function saveState() {
     chrome.storage.local.set({items: items});
 }
 
-
+// draggable item list functions
 let row;
 function dragStart(event) {  
     row = event.target; 
