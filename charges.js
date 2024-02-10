@@ -20,14 +20,19 @@ observer.observe(popupDisplay, {attributes: true});
 function createItems(items) {
     const chargesWindow = popupDisplay.querySelector('.modal-content');
     const upsellItemsWrapper = document.createElement('div');
-    
-    chargesWindow.appendChild(upsellItemsWrapper);
+    upsellItemsWrapper.classList.add('item-wrapper');
+
+    Object.keys(items).forEach(item => {
+        let btn = document.createElement('button');
+        btn.classList.add('item-btn');
+        btn.textContent = '+ ' + items[item]['item'];
+        btn.addEventListener('click', addCharge(items[item]['upc']));
+        upsellItemsWrapper.appendChild(btn);
+    });
+
+    chargesWindow.insertBefore(upsellItemsWrapper, chargesWindow.querySelector('.modal-footer'));
 }
 
-function addCharge() {
+function addCharge(upc) {
     
-}
-
-function removeCharge() {
-
 }

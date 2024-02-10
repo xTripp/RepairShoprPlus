@@ -1,0 +1,16 @@
+.item-wrapper {
+    width: calc(100% - 60px);
+    height: fit-content;
+    padding: 10px;
+    margin: 10px 15px;
+    display: flex;
+    border-radius: 6px;
+    border: 1px #ccc solid;
+}
+
+.item-btn {
+    border-radius: 5px;
+    margin-right: 8px;
+    font-size: 14px;
+    color: #333
+}
