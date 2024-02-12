@@ -56,8 +56,7 @@
     },
     "permissions": [
         "storage",
-        "tabs",
-        "notifications"
+        "tabs"
     ],
     "web_accessible_resources": [
         {
