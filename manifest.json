@@ -11,6 +11,10 @@
     },
     "content_scripts": [
         {
+            "matches": ["https://*.repairshopr.com/*"],
+            "js": ["global.js"]
+        },
+        {
             "matches": ["https://*.repairshopr.com/tickets"],
             "js": ["tickets.js", "charges.js"],
             "css": ["tickets.css", "charges.css"]
@@ -38,12 +42,22 @@
             "css": ["checkbox.css"]
         }
     ],
+    "background": {
+        "service_worker": "background.js"
+    },
     "action": {
         "default_title": "RepairShopr+ Settings",
-        "default_popup": "popup.html"
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "/assets/icon-16x16.png",
+            "48": "/assets/icon-48x48.png",
+            "128": "/assets/icon-128x128.png"
+          }
     },
     "permissions": [
-        "storage", "tabs"
+        "storage",
+        "tabs",
+        "notifications"
     ],
     "web_accessible_resources": [
         {
