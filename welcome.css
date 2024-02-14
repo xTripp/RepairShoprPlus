@@ -8,6 +8,30 @@ body {
     background-color: #4e4e4e;
 }
 
+h1 {
+    font-size: 32px;
+    text-align: center;
+}
+
+h2 {
+    font-size: 24px;
+    text-align: center;
+}
+
+a {
+    color: whitesmoke;
+}
+
+ul {
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+.sub-list li {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
 #logo {
     height: 256px;
     width: 256px;
@@ -16,7 +40,7 @@ body {
 }
 
 .main-wrapper {
-    width: fit-content;
+    width: 1000px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -25,4 +49,39 @@ body {
     border: 2px solid #1f1f1f;
     border-radius: 5px;
     color: whitesmoke;
+}
+
+.content-wrapper {
+    width: 100%;
+}
+
+.usage-wrapper {
+    width: 95%;
+    margin: 50px auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.usage-steps {
+    width: 270px;
+    height: 100px;
+    padding: 5px 10px;
+    border: 2px solid #1f1f1f;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.version-wrapper {
+    width: 95%;
+    margin: 0 auto;
+    border: 2px solid #1f1f1f;
+    border-radius: 5px;
+}
+
+.feature-list {
+    width: fit-content;
+    margin: 0 auto;
 }
