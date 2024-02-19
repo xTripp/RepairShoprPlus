@@ -1,4 +1,5 @@
 body {
+    width: 320px;
     background-color: #1f1f1f;
 }
 
@@ -14,6 +15,7 @@ h3 {
     margin-bottom: 5px;
     margin-right: 5px;
     border-radius: 2px;
+    cursor: pointer;
 }
 
 .header,
@@ -36,6 +38,18 @@ h3 {
     border: 1px solid #363636;
     border-radius: 6px;
     padding: 5px;
+}
+
+.settings-body p {
+    margin: 4px 0px;
+    color: whitesmoke;
+}
+
+.settings-footer {
+    margin: 5px 0;
+    gap: 5px;
+    display: flex;
+    flex-direction: column;
 }
 
 .table-left {

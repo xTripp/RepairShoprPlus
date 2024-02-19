@@ -59,7 +59,6 @@ class Item {
         }
     }
 
-    // Character limit?
     addItem() {
         if (this.itemInputBox.value.trim() !== '' && this.upcInputBox.value.trim() !== '') {
             this.name.innerHTML = this.itemInputBox.value;
