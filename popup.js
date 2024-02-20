@@ -11,56 +11,22 @@ document.addEventListener('DOMContentLoaded', function() {
     const upsellOpportunityConfig = document.getElementById('config7');
     const applyButton = document.getElementById('apply');
 
-    // open import/export settings menu when logo is clicked
-    logo.addEventListener('click', function() {
-        const body = document.querySelector('.menu');
-        body.classList.add('settings-body');
-        const footer = document.querySelector('.footer');
-        footer.classList.add('settings-footer')
-
-        let footerContent = '';
-        footerContent += '<div><button id="exportButton" style="width: 100%;">Export Settings Backup Code to Clipboard</button></div>';
-        footerContent += '<div><input id="backupCodeInput" style="width: 60%; margin-right: 8px" type="text" placeholder="Paste backup code here"></input><button id="importButton" style="width: 35%">Import Settings</button></div>';
-        footer.innerHTML = footerContent;
-
-        getSettings(function(bodyContent) {
-            body.innerHTML = bodyContent;
-        });
-
-        // generate a base64 backup code and copy it to the clipboard
-        document.getElementById('exportButton').addEventListener('click', function() {
-            generateBackupCode(function(backupCode) {
-                navigator.clipboard.writeText(backupCode);
-            });
-        });
-
-        // take base64 backup code and restore its contents
-        document.getElementById('importButton').addEventListener('click', function() {
-            const backupCode = document.getElementById('backupCodeInput').value;
-            
-            if (backupCode !== '') {
-                restoreFromBackupCode(backupCode);
-                getSettings(function(bodyContent) {
-                    body.innerHTML = bodyContent;
-                });
-            }
-        });
-    });
-
+    logo.addEventListener('click', loadSettingsPage);
     upsellOpportunityConfig.addEventListener('click', function() {
-        const upsellPage = chrome.runtime.getURL('./upsell.html');
-        chrome.tabs.create({url: upsellPage});
+        chrome.tabs.create({url: chrome.runtime.getURL('./upsell.html')});
     });
 
-    chrome.storage.local.get(['legacyTicketState', 'quickLinksState', 'lastUpdatedState', 'chargesLinkState', 'forceSingleState', 'registerHistoryState', 'upsellOpportunityState', 'global24hTimeState'], function(result) {
-        legacyTicketToggle.checked = result.legacyTicketState === true;
-        quickLinksToggle.checked = result.quickLinksState === true;
-        lastUpdatedToggle.checked = result.lastUpdatedState === true;
-        chargesLinkToggle.checked = result.chargesLinkState === true;
-        forceSingleToggle.checked = result.forceSingleState === true;
-        registerHistoryToggle.checked = result.registerHistoryState === true;
-        upsellOpportunityToggle.checked = result.upsellOpportunityState === true;
-        global24hTimeToggle.checked = result.global24hTimeState === true;
+    chrome.storage.local.get(
+        ['legacyTicketState', 'quickLinksState', 'lastUpdatedState', 'chargesLinkState', 'forceSingleState', 'registerHistoryState', 'upsellOpportunityState', 'global24hTimeState'],
+        function(result) {
+            legacyTicketToggle.checked = result.legacyTicketState === true;
+            quickLinksToggle.checked = result.quickLinksState === true;
+            lastUpdatedToggle.checked = result.lastUpdatedState === true;
+            chargesLinkToggle.checked = result.chargesLinkState === true;
+            forceSingleToggle.checked = result.forceSingleState === true;
+            registerHistoryToggle.checked = result.registerHistoryState === true;
+            upsellOpportunityToggle.checked = result.upsellOpportunityState === true;
+            global24hTimeToggle.checked = result.global24hTimeState === true;
     });
 
     let legacyTicketState, quickLinksState, lastUpdatedState, chargesLinkState, forceSingleState, registerHistoryState, upsellOpportunityState, global24hTimeState;
@@ -107,6 +73,47 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 })
 
+// load import/export settings menu
+function loadSettingsPage() {
+    const body = document.querySelector('.menu');
+    body.classList.add('settings-body');
+    const footer = document.querySelector('.footer');
+    footer.classList.add('settings-footer')
+
+    let footerContent = '';
+    footerContent += '<div><button id="exportButton">Export Settings Backup Code to Clipboard</button></div>';
+    footerContent += '<div><input id="backupCodeInput" type="text" placeholder="Paste backup code here"></input><button id="importButton">Import Settings</button></div>';
+    footer.innerHTML = footerContent;
+
+    getSettings(function(bodyContent) {
+        body.innerHTML = bodyContent;
+    });
+
+    // generate a base64 backup code and copy it to the clipboard
+    document.getElementById('exportButton').addEventListener('click', function() {
+        generateBackupCode(function(backupCode) {
+            navigator.clipboard.writeText(backupCode);
+        });
+        this.textContent = 'Backup code copied!';
+        this.classList.add('success');
+        this.addEventListener('animationend', function() {
+            this.classList.remove('success');
+        });
+    });
+
+    // take base64 backup code and restore its contents
+    document.getElementById('importButton').addEventListener('click', function() {
+        const backupCode = document.getElementById('backupCodeInput').value;
+        
+        if (backupCode !== '') {
+            restoreFromBackupCode(backupCode);
+            getSettings(function(bodyContent) {
+                body.innerHTML = bodyContent;
+            });
+        }
+    });
+}
+
 // take all local values saved and create an html block to display the content
 function getSettings(callback) {
     chrome.storage.local.get(null, function(items) {
@@ -128,27 +135,36 @@ function generateBackupCode(callback) {
 }
 
 // decode the backup code into values to be saved locally
-function restoreFromBackupCode(backupCode) {
-    const decodedData = decodeBackupCode(backupCode);
-    const restoredSettings = JSON.parse(decodedData);
-    chrome.storage.local.set(restoredSettings);
+function restoreFromBackupCode(code) {
+    const decodedData = decodeBackupCode(code);
+    const backupCode = document.getElementById('backupCodeInput');
+    backupCode.className = '';
+    backupCode.value = '';
+    
+    try {
+        const restoredSettings = JSON.parse(decodedData);
+        chrome.storage.local.set(restoredSettings);
+        backupCode.classList.add('valid-placeholder');
+        backupCode.setAttribute('placeholder', 'Settings imported successfully!');
+    } catch {
+        backupCode.classList.add('invalid-placeholder');
+        backupCode.setAttribute('placeholder', 'Invalid backup code. Try again.');
+    }
 }
 
 // convert data to a base64 encoded string
 function encodeBackupData(data) {
-    const backupCode = document.getElementById('backupCodeInput');
-    try {
-        return btoa(data);
-    } catch {
-        
-    }
+    return btoa(data);
 }
 
 // convert the base64 encoded string back to its original form
-function decodeBackupCode(backupCode) {
+function decodeBackupCode(data) {    
     try {
-        return atob(backupCode);
+        return atob(data);
     } catch {
-
+        const backupCode = document.getElementById('backupCodeInput');
+        backupCode.className = '';
+        backupCode.classList.add('invalid-placeholder');
+        backupCode.setAttribute('placeholder', 'Invalid backup code. Try again.');
     }
 }

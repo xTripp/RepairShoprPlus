@@ -52,6 +52,50 @@ h3 {
     flex-direction: column;
 }
 
+#exportButton {
+    width: 100%;
+    cursor: pointer;
+}
+
+#backupCodeInput {
+    font-size: 12px;
+    width: 60%;
+    margin-right: 8px;
+    outline: none;
+    background-color: buttonface;
+}
+
+#backupCodeInput.invalid-placeholder::placeholder {
+    color: crimson;
+    font-weight: 600;
+}
+
+#backupCodeInput.valid-placeholder::placeholder {
+    color: green;
+    font-weight: 600;
+}
+
+#importButton {
+    width: 35%;
+    cursor: pointer;
+}
+
+.success {
+    animation: successBlink 1s;
+    background-color: yellowgreen;
+    padding: 2px;
+    border-color: gray;
+    border-radius: 2px;
+    border-width: 1px;
+    border-style: outset;
+}
+
+@keyframes successBlink {
+    100% {
+        background-color: buttonface;
+    }
+}
+
 .table-left {
     padding-right: 20px;
 }
