@@ -1,5 +1,6 @@
 // replace the customer link with the corresponding ticket link and observe all changes made to the tickets to make sure the links stay set correctly
 function replaceCustomerLink(row) {
+  // TODO: this assumes that the customer and ticket links must be on columns 3 and 4 but that isn't always the case, fix this
   const customerLink = row.querySelector('td:nth-child(3) a[href^="/customers/"]');
   const ticketLink = row.querySelector('td:nth-child(4) a[href^="/tickets/"]');
 
@@ -49,6 +50,7 @@ function createQuickLink(row){
   }
 
   // get JSON response from the ticket's qv_extra url. The JSON response will return the last note on the ticket
+  // TODO: this assumes that the ticket links must be on column 4 but that isn't always the case, fix this 
   const ticketQvDataURL = row.querySelector('td:nth-child(4) a[href^="/tickets/"]') + '/qv_extra';
   fetch(ticketQvDataURL)
     .then(response => {
@@ -185,6 +187,7 @@ function initializeTicketTable() {
 
     // forces all tickets onto a single line
     if (result.forceSingleState) {
+      // TODO: is this failproof? is the tableParent and tableContainer always at this path?
       const tableParent = document.querySelector('#wrapper > div.main > div > div > div.row');
       const tableContainer = document.querySelector('#wrapper > div.main > div > div');
       tableParent.style.whiteSpace = 'nowrap';
