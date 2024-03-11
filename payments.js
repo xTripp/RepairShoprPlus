@@ -1,4 +1,8 @@
-//dont forget to handle if custom payment method is removed but already saved to chrome.storage
+// handle if custom payment method is removed but already saved to chrome.storage
+// make settings box always fit inside parent box not fixed width
+// unrelated to this file but fix upsell opportunity items bug that prevents item buttons from loading sometimes
+// fix light mode styles
+// make take payment popup while disabled to explain why its disabled
 
 const settingsBox = document.createElement('fieldset');
 settingsBox.innerHTML = '\
@@ -26,7 +30,6 @@ settingsBox.innerHTML = '\
 const sidePanel = document.querySelector('.col-md-2.offset1');
 sidePanel.appendChild(settingsBox);
 
-const defaultPaymentDropdownContainer = document.getElementById('defaultPaymentDropdownContainer');
 const paymentMethod = document.getElementById('payment_payment_method_id');
 const paymentMethodVal = paymentMethod.value;
 const defaultPaymentDropdown = paymentMethod.cloneNode(true);
@@ -37,6 +40,8 @@ const noneOption = document.createElement('option');
 noneOption.value = 'none';
 noneOption.textContent = 'None (Manual selection required before payment)';
 defaultPaymentDropdown.insertBefore(noneOption, defaultPaymentDropdown.firstChild);
+
+const defaultPaymentDropdownContainer = document.getElementById('defaultPaymentDropdownContainer');
 defaultPaymentDropdownContainer.appendChild(defaultPaymentDropdown);
 
 const applyButton = document.getElementById('apply');
@@ -52,12 +57,7 @@ loadState();
 
 function loadState() {
     chrome.storage.local.get(['updatedPaymentUI', 'defaultPayment'], function(data) {
-        if (data.updatedPaymentUI !== undefined) {
-            updatedUI.checked = data.updatedPaymentUI;
-        } else {
-            defaultPayment.value = paymentMethodVal.value;
-            saveState();
-        }
+        updatedUI.checked = data.updatedPaymentUI;
         if (data.defaultPayment !== undefined) {
             defaultPayment.value = data.defaultPayment;
         } else {
@@ -69,12 +69,24 @@ function loadState() {
             updateUI();
         }
         
-        if (defaultPayment.value !== 'none') {
-            paymentMethod.value = defaultPayment.value;
-            const event = new Event('change', { bubbles: true });
-            paymentMethod.dispatchEvent(event);
+        paymentMethod.value = data.defaultPayment;
+        if (data.defaultPayment !== 'none') {
+            paymentMethod.dispatchEvent(new Event('change', { bubbles: true }));
         } else {
-            
+            const nonePaymentMethod = document.createElement('option');
+            nonePaymentMethod.disabled = true;
+            nonePaymentMethod.selected = true;
+            nonePaymentMethod.value = 'none';
+            nonePaymentMethod.textContent = 'Select payment method';
+            paymentMethod.insertBefore(nonePaymentMethod, paymentMethod.firstChild);
+
+            const paymentButton = document.getElementById('take-payment');
+            paymentButton.disabled = true;
+            paymentMethod.addEventListener('change', function() {
+                if (paymentMethod.value !== 'none') {
+                    paymentButton.disabled = false;
+                }
+            })
         }
     });
 }
@@ -87,5 +99,29 @@ function saveState() {
 }
 
 function updateUI() {
-    console.log('update');
+    document.querySelector('.subnavbar').style.marginBottom = '10px';
+    document.querySelector('.col-md-12.mbl').style.marginBottom = 0;
+    document.querySelector('.tooltipper.right.mrl').remove();
+
+    // Payment method selection box
+    const paymentMethodContainer = document.createElement('div');
+    paymentMethodContainer.classList.add('form-group');
+
+    const paymentMethodLabel = document.createElement('label');
+    paymentMethodLabel.classList.add('string', 'optional');
+    paymentMethodLabel.textContent = 'Payment Method';
+
+    paymentMethod.parentNode.insertBefore(paymentMethodContainer, paymentMethod);
+    paymentMethodContainer.appendChild(paymentMethodLabel);
+    paymentMethodContainer.appendChild(paymentMethod);
+
+    // Payment secured box
+    console.log(document.querySelector('.fa-credit-card'));
+    document.querySelector('.col-md-2.offset1').children[2].remove();
+    const cardSecuredText = document.createElement('p');
+    const cashSecuredText = document.createElement('p');
+    cardSecuredText.textContent = 'Browser communication protected by strong SSL';
+    cashSecuredText.textContent = 'Browser communication protected by strong SSL';
+    document.querySelector('.fa-credit-card').appendChild(cardSecuredText);
+    document.querySelector('.fa-money-bill').appendChild(cashSecuredText);
 }

@@ -81,7 +81,7 @@ function loadSettingsPage() {
     footer.classList.add('settings-footer')
 
     let footerContent = '';
-    footerContent += '<div><button id="exportButton">Export Settings Backup Code to Clipboard</button></div>';
+    footerContent += '<div><button id="exportButton">Copy Settings Backup Code to Clipboard</button></div>';
     footerContent += '<div><input id="backupCodeInput" type="text" placeholder="Paste backup code here"></input><button id="importButton">Import Settings</button></div>';
     footer.innerHTML = footerContent;
 
