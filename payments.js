@@ -1,12 +1,16 @@
 // handle if custom payment method is removed but already saved to chrome.storage
-// make settings box always fit inside parent box not fixed width
 // unrelated to this file but fix upsell opportunity items bug that prevents item buttons from loading sometimes
 // fix light mode styles
 // make take payment popup while disabled to explain why its disabled
 
+let darkMode = false;
+if (window.getComputedStyle(document.querySelector('body')).backgroundColor === 'rgb(31, 31, 31)') {
+    darkMode = true;
+}
+
 const settingsBox = document.createElement('fieldset');
 settingsBox.innerHTML = '\
-    <legend>RepairShopr+ Settings</legend>\
+    <legend id="legendText">RepairShopr+ Settings</legend>\
     <table>\
         <tbody>\
             <tr>\
@@ -29,6 +33,13 @@ settingsBox.innerHTML = '\
     ';
 const sidePanel = document.querySelector('.col-md-2.offset1');
 sidePanel.appendChild(settingsBox);
+
+const legend = document.getElementById('legendText');
+if (darkMode) {
+    settingsBox.style = 'border: 2px solid #ccc !important;';
+    legend.style = 'color: whitesmoke !important;';
+    document.querySelector('.slider').classList.toggle('darkmode-slider');
+}
 
 const paymentMethod = document.getElementById('payment_payment_method_id');
 const paymentMethodVal = paymentMethod.value;
@@ -116,12 +127,22 @@ function updateUI() {
     paymentMethodContainer.appendChild(paymentMethod);
 
     // Payment secured box
-    console.log(document.querySelector('.fa-credit-card'));
     document.querySelector('.col-md-2.offset1').children[2].remove();
     const cardSecuredText = document.createElement('p');
     const cashSecuredText = document.createElement('p');
     cardSecuredText.textContent = 'Browser communication protected by strong SSL';
     cashSecuredText.textContent = 'Browser communication protected by strong SSL';
-    document.querySelector('.fa-credit-card').appendChild(cardSecuredText);
-    document.querySelector('.fa-money-bill').appendChild(cashSecuredText);
+    cardSecuredText.style = 'margin-top: 6px; font-size: 14px; font-weight: 700;';
+    cashSecuredText.style = 'margin-top: 6px; font-size: 14px; font-weight: 700;';
+    const ccBox = document.querySelector('.fa-credit-card');
+    const cashBox = document.querySelector('.fa-money-bill');
+    ccBox.appendChild(cardSecuredText);
+    cashBox.appendChild(cashSecuredText);
+    ccBox.style = 'width: 400px; text-align: center; text-wrap: nowrap;';
+    cashBox.style = 'width: 400px; text-align: center; text-wrap: nowrap;';
+
+    // Amount Tendered
+    const tenderedBox = document.querySelector('.cashOnly');
+    tenderedBox.classList.add('tenderedBox');
+
 }

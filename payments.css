@@ -2,7 +2,7 @@ fieldset {
     height: 300px;
     width: 400px;
     padding: 20px !important;
-    border: 2px solid #ccc !important;
+    border: 2px solid #333 !important;
 }
 
 legend {
@@ -11,7 +11,7 @@ legend {
     margin-left: 10px;
     margin-bottom: 10px !important;
     border: none !important;
-    color: whitesmoke !important;
+    color: #333 !important;
     font-weight: bold;
     text-wrap: nowrap;
 }
@@ -24,6 +24,13 @@ td {
     width: 100%;
 }
 
+.tenderedBox {
+    width: fit-content !important;
+    margin: 40px auto !important;
+    border-radius: 5px;
+    text-wrap: nowrap;
+}
+
 .switch {
     width: 4em !important;
     height: 2em !important;
@@ -33,6 +40,11 @@ td {
     height: 1.4em !important;
     width: 1.4em !important;
     bottom: 0.25em !important;
+    background-color: #333 !important;
+}
+
+.darkmode-slider:before {
+    background-color: white !important;
 }
 
 .switch input:checked + .slider:before {
