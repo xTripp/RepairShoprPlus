@@ -1,7 +1,14 @@
 # RepairShopr+ Chrome Extension
 This extension makes changes to how the RepairShopr System functions and adds new features and improvements.
 
----> CURRENT VERSION V1.5 <---
+---> CURRENT VERSION V1.6 <---
+V 1.6 (3/13/24):
+- NEW FEATURE: Payment Page Settings
+  - Adds a settings window to the payments page with options to modify the page
+  - Features a toggleable updated UI option and a default payment option dropdown to set default payment method on page load
+- NEW FEATURE: Import/Export RepairShopr+ Settings
+  - Allows RepairShopr+ settings to be exported from one computer and loaded to another for simple setup
+- Other minor changes
 
 V 1.5 (2/14/24):
 - NEW FEATURE: Item Upsell in Add/View Charges Widget
