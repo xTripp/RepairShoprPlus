@@ -25,26 +25,46 @@ td {
 }
 
 .tenderedBox {
-    width: fit-content !important;
+    width: min-content !important;
     margin: 40px auto !important;
-    border-radius: 5px;
+    border: 3px outset white;
+    border-radius: 8px;
+    background-color: khaki !important;
+    color: #555 !important;
     text-wrap: nowrap;
+}
+
+.tenderedBoxInput {
+    width: 60% !important;
+    font-size: 24px;
+    font-weight: 600;
+    margin: 5px 0;
+    padding: 5px 5px 2px 5px;
+    border: none !important;
+    border-bottom: 2px solid #bdae2e !important;
+    outline: none !important;
+    background-color: khaki !important;
+}
+
+.tenderedBoxInput::placeholder {
+    color: #aaa !important;
 }
 
 .switch {
     width: 4em !important;
     height: 2em !important;
+    background-color: #999;
+    border-radius: 25px !important;
 }
 
 .slider:before {
     height: 1.4em !important;
     width: 1.4em !important;
     bottom: 0.25em !important;
-    background-color: #333 !important;
 }
 
-.darkmode-slider:before {
-    background-color: white !important;
+.darkmode-slider {
+    background-color: #363636 !important;
 }
 
 .switch input:checked + .slider:before {
@@ -52,13 +72,18 @@ td {
 }
 
 .option-text {
-    margin-left: 10px;
-    margin-bottom: 5px;
-    font-size: 16px;
+    margin-left: 10px !important;
+    margin-bottom: 5px !important;
+    font-size: 16px !important;
+    color: #333 !important;
+}
+
+.darkmode-option-text {
+    color: white !important;
 }
 
 .option-text:hover::after {
     width: fit-content !important;
-    font-size: 14px;
+    font-size: 14px !important;
     text-wrap: nowrap !important;
 }
