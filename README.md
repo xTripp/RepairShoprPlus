@@ -1,7 +1,15 @@
 # RepairShopr+ Chrome Extension
 This extension makes changes to how the RepairShopr System functions and adds new features and improvements.
 
----> CURRENT VERSION V1.6 <---
+---> CURRENT VERSION V1.6.1 <---
+V 1.6.1 Hotfix (3/15/24):
+- Critical Bug Fixes
+  - Fixed bug with payment method disappearing and becoming quick payment on first install/update
+  - Fixed bug with default payment method not being set sometimes
+- Add-on Features
+  - Added a toggle button in the RepairShopr+ main settings popup window for newly introduced payment settings
+  - Added a 'Hide settings' checkbox within payment settings to declutter the payment window
+  
 V 1.6 (3/13/24):
 - NEW FEATURE: Payment Page Settings
   - Adds a settings window to the payments page with options to modify the page

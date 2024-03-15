@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const registerHistoryToggle = document.getElementById('option6');
     const upsellOpportunityToggle = document.getElementById('option7');
     const global24hTimeToggle = document.getElementById('option8');
+    const paymentSettingsToggle = document.getElementById('option9');
     const upsellOpportunityConfig = document.getElementById('config7');
     const applyButton = document.getElementById('apply');
 
@@ -17,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     chrome.storage.local.get(
-        ['legacyTicketState', 'quickLinksState', 'lastUpdatedState', 'chargesLinkState', 'forceSingleState', 'registerHistoryState', 'upsellOpportunityState', 'global24hTimeState'],
+        ['legacyTicketState', 'quickLinksState', 'lastUpdatedState', 'chargesLinkState', 'forceSingleState', 'registerHistoryState', 'upsellOpportunityState', 'global24hTimeState', 'paymentSettingsState'],
         function(result) {
             legacyTicketToggle.checked = result.legacyTicketState === true;
             quickLinksToggle.checked = result.quickLinksState === true;
@@ -27,9 +28,10 @@ document.addEventListener('DOMContentLoaded', function() {
             registerHistoryToggle.checked = result.registerHistoryState === true;
             upsellOpportunityToggle.checked = result.upsellOpportunityState === true;
             global24hTimeToggle.checked = result.global24hTimeState === true;
+            paymentSettingsToggle.checked = result.paymentSettingsState === true;
     });
 
-    let legacyTicketState, quickLinksState, lastUpdatedState, chargesLinkState, forceSingleState, registerHistoryState, upsellOpportunityState, global24hTimeState;
+    let legacyTicketState, quickLinksState, lastUpdatedState, chargesLinkState, forceSingleState, registerHistoryState, upsellOpportunityState, global24hTimeState, paymentSettingsState;
     function updateStates() {
         legacyTicketState = legacyTicketToggle.checked;
         quickLinksState = quickLinksToggle.checked;
@@ -39,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
         registerHistoryState = registerHistoryToggle.checked;
         upsellOpportunityState = upsellOpportunityToggle.checked;
         global24hTimeState = global24hTimeToggle.checked;
+        paymentSettingsState = paymentSettingsToggle.checked
     }
 
     legacyTicketToggle.addEventListener('change', updateStates);
@@ -49,6 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
     registerHistoryToggle.addEventListener('change', updateStates);
     upsellOpportunityToggle.addEventListener('change', updateStates);
     global24hTimeToggle.addEventListener('change', updateStates);
+    paymentSettingsToggle.addEventListener('change', updateStates);
 
     // when the apply button is pressed: save all settings to storage, close the popup window, and refresh the page if on repairshopr
     applyButton.addEventListener('click', function() {
@@ -61,7 +65,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 forceSingleState: forceSingleState,
                 registerHistoryState: registerHistoryState,
                 upsellOpportunityState: upsellOpportunityState,
-                global24hTimeState: global24hTimeState
+                global24hTimeState: global24hTimeState,
+                paymentSettingsState: paymentSettingsState
             });
             
             window.close();

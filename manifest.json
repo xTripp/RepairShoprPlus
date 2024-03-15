@@ -1,7 +1,7 @@
 {
     "name": "RepairShopr+",
     "description": "RepairShopr service extension for increased functionality and QOL fixes.",
-    "version": "1.6",
+    "version": "1.6.1",
     "manifest_version": 3,
     "icons": {
         "16": "/assets/icon-16x16.png",
@@ -44,7 +44,7 @@
         {
             "matches": ["https://*.repairshopr.com/payments/new*"],
             "js": ["payments.js"],
-            "css": ["payments.css", "toggle.css"]
+            "css": ["payments.css", "toggle.css", "checkbox.css"]
         }
     ],
     "background": {
