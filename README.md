@@ -1,7 +1,13 @@
 # RepairShopr+ Chrome Extension
 This extension makes changes to how the RepairShopr System functions and adds new features and improvements.
 
----> CURRENT VERSION V1.6.1 <---
+---> CURRENT VERSION V2.0 <---
+V 2.0 The API Update (##/##/##):
+- Bug Fixes
+  - TODO autofill on payment page
+  - TODO upsell opportunities sometimes not showing up
+- Quick links setting is now removed and deprecated. If/when a solution is found it will return
+
 V 1.6.1 Hotfix (3/15/24):
 - Critical Bug Fixes
   - Fixed bug with payment method disappearing and becoming quick payment on first install/update

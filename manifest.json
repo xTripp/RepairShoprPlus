@@ -1,23 +1,23 @@
 {
     "name": "RepairShopr+",
-    "description": "RepairShopr service extension for increased functionality and QOL fixes.",
-    "version": "1.6.1",
+    "description": "RepairShopr service extension for improved functionality and quality features.",
+    "version": "2.0",
     "manifest_version": 3,
     "icons": {
-        "16": "/assets/icon-16x16.png",
-        "32": "/assets/icon-32x32.png",
-        "48": "/assets/icon-48x48.png",
-        "128": "/assets/icon-128x128.png"
+        "16": "/assets/logo/icon-16x16.png",
+        "32": "/assets/logo/icon-32x32.png",
+        "48": "/assets/logo/icon-48x48.png",
+        "128": "/assets/logo/icon-128x128.png"
     },
     "content_scripts": [
         {
             "matches": ["https://*.repairshopr.com/*"],
-            "js": ["global.js"]
+            "js": ["/scripts/global.js"]
         },
         {
             "matches": ["https://*.repairshopr.com/tickets"],
-            "js": ["tickets.js", "charges.js"],
-            "css": ["tickets.css", "charges.css"]
+            "js": ["/scripts/tickets.js", "/scripts/charges.js"],
+            "css": ["/styles/charges.css"]
         },
         {
             "matches": ["https://*.repairshopr.com/tickets/0*",
@@ -31,32 +31,32 @@
                         "https://*.repairshopr.com/tickets/8*",
                         "https://*.repairshopr.com/tickets/9*"
                         ],
-            "js": ["ticket_page.js", "charges.js"],
-            "css": ["charges.css"]
+            "js": ["/scripts/ticket_page.js", "/scripts/charges.js"],
+            "css": ["/styles/charges.css"]
         },
         {
             "matches": ["https://*.repairshopr.com/registers/*/close",
                         "https://*.repairshopr.com/registers/*/open"
                         ],
-            "js": ["pos.js"],
-            "css": ["checkbox.css"]
+            "js": ["/scripts/pos.js"],
+            "css": ["/styles/ui/checkbox.css"]
         },
         {
             "matches": ["https://*.repairshopr.com/payments/new*"],
-            "js": ["payments.js"],
-            "css": ["payments.css", "toggle.css", "checkbox.css"]
+            "js": ["/scripts/payments.js"],
+            "css": ["/styles/payments.css", "/styles/ui/toggle.css", "/styles/ui/checkbox.css"]
         }
     ],
     "background": {
-        "service_worker": "background.js"
+        "service_worker": "/scripts/background.js"
     },
     "action": {
         "default_title": "RepairShopr+ Settings",
-        "default_popup": "popup.html",
+        "default_popup": "/pages/popup/popup.html",
         "default_icon": {
-            "16": "/assets/icon-16x16.png",
-            "48": "/assets/icon-48x48.png",
-            "128": "/assets/icon-128x128.png"
+            "16": "/assets/logo/icon-16x16.png",
+            "48": "/assets/logo/icon-48x48.png",
+            "128": "/assets/logo/icon-128x128.png"
           }
     },
     "permissions": [
@@ -65,7 +65,7 @@
     ],
     "web_accessible_resources": [
         {
-            "resources": ["/assets/link_black.png", "/assets/link_white.png"],
+            "resources": ["/assets/images/link_black.png", "/assets/images/link_white.png"],
             "matches": ["<all_urls>"]
         }
     ]

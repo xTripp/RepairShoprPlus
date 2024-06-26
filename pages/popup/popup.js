@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     logo.addEventListener('click', loadSettingsPage);
     upsellOpportunityConfig.addEventListener('click', function() {
-        chrome.tabs.create({url: chrome.runtime.getURL('./upsell.html')});
+        chrome.tabs.create({url: chrome.runtime.getURL('/../pages/app/upsell.html')});
     });
 
     chrome.storage.local.get(
