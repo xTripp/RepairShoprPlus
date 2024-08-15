@@ -15,15 +15,16 @@
                 <tbody>
                     <tr>
                         <td class="table-left">
-                            <div class="option-text" data-tooltip="Reverts the customer link back to the ticket link as it used to on the tickets page.">Enable Legacy Ticket Links</div><br>
+                            <div class="option-text" data-tooltip="Reverts the customer name link back to the ticket link as it used to on the tickets page.">Enable Legacy Ticket Links</div><br>
                             <div class="option-text" data-tooltip="Creates a Quick Link button for each customer that directs to the URL in the customer's most recent ticket note.&NewLine;&NewLine;(This feature is currently broken as RepairShopr will limit IP requests when too many tickets are open)">Quick Links <span class="feature-status status-broken">(Not working)</span></div><br>
-                            <div class="option-text" data-tooltip="Disables the red and yellow warning tags in the &quot;last updated&quot; column on the tickets page.">Disable Last Updated Color Tags</div><br>
-                            <div class="option-text" data-tooltip="Converts the text in the &quot;charges&quot; column to a button that will open the add/view charges widget on the tickets page.">Charges Links</div><br>
+                            <div class="option-text" data-tooltip="Disables the red and yellow warning tags in the &quot;last updated&quot; column (if present in the ticket table) on the tickets page.">Disable Last Updated Color Tags</div><br>
+                            <div class="option-text" data-tooltip="Converts the text in the &quot;charges&quot; column (if present in the ticket table) to a button that will open the add/view charges widget on the tickets page.">Charges Links</div><br>
                             <div class="option-text" data-tooltip="Forces each ticket to fit on a single line for a compact style on the tickets page.">Force Single-Line Tickets</div><br>
                             <div class="option-text" data-tooltip="Displays opening/closing counts in each input field on the POS open/close page.">POS Open/Close History</div><br>
                             <div class="option-text" data-tooltip="Enables upsell opportunity buttons in the add/view charges window. Buttons can be configured by clicking the config button next to the toggle slider.">Enable Upsell Opportunities</div><br>
                             <div class="option-text" data-tooltip="Converts AM/PM time to 24 hour time format site-wide">Global 24-hour Time Format</div><br>
-                            <div class="option-text" data-tooltip="Enables a settings box inside of the payment page to make changes to the checkout process">Payment Page Settings <span class="feature-status status-new">(New!)</span></div>
+                            <div class="option-text" data-tooltip="Enables a settings box inside of the payment page to make changes to the checkout process">Payment Page Settings</div><br>
+                            <div class="option-text" data-tooltip="Enables color-coded element backgrounds for fields in the ticket table">Enable Color-coded Table Fields <span class="feature-status status-new">(New!)</span></div>
                         </td>
                         <td class="table-right">
                             <div class="option-toggle">
@@ -80,6 +81,12 @@
                                     <span class="slider"></span>
                                 </label>
                             </div>
+                            <div class="option-toggle">
+                                <label class="switch">
+                                    <input id="option10" type="checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
                         </td>
                         <td>
                             <div class="config"></div>
@@ -97,6 +104,13 @@
                             </div>
                             <div class="config"></div>
                             <div class="config"></div>
+                            <div class="config">
+                                <button id="config10" class="config-button">
+                                    <div class="similar-line line-1"></div>
+                                    <div class="similar-line line-2"></div>
+                                    <div class="similar-line line-3"></div>
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 </tbody>

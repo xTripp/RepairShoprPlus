@@ -1,5 +1,5 @@
 body {
-    width: 320px;
+    width: 330px;
     background-color: #1f1f1f;
 }
 
@@ -162,6 +162,7 @@ h3 {
     padding: 5px 20px;
     letter-spacing: 1.5px;
     position: relative;
+    left: 40px;
     font-family: inherit;
     border-radius: 50px;
     overflow: hidden;
