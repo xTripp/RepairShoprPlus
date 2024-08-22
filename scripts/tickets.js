@@ -1,19 +1,26 @@
 // replace the customer link with the corresponding ticket link and observe all changes made to the tickets to make sure the links stay set correctly
 function replaceCustomerLink(row) {
-  // TODO: this assumes that the customer and ticket links must be on columns 3 and 4 but that isn't always the case, fix this
-  const customerLink = row.querySelector('td:nth-child(3) a[href^="/customers/"]');
-  const ticketLink = row.querySelector('td:nth-child(4) a[href^="/tickets/"]');
+  const customerLink = Array.from(row.querySelectorAll('a')).find(link => link.href.includes('/customers/'));
+  const ticketLink = Array.from(row.querySelectorAll('a')).find(link => link.href.includes('/tickets/'));
 
-  const newCustomerLink = customerLink.cloneNode(true);
-  newCustomerLink.textContent = customerLink.textContent;
-  newCustomerLink.href = ticketLink.href;
+  // ensure both links are found before proceeding
+  if (customerLink && ticketLink) {
+    // clone the customer link and update its href
+    const newCustomerLink = customerLink.cloneNode(true);
+    newCustomerLink.href = ticketLink.href;
 
-  customerLink.parentNode.replaceChild(newCustomerLink, customerLink);
+    // replace the old customer link with the new one
+    customerLink.parentNode.replaceChild(newCustomerLink, customerLink);
+  } else {
+    console.group('RS+ Debug: Legacy ticket link error');
+    console.warn('Customer link or ticket link not found')
+    console.log(row);
+    console.groupEnd();
+  }
 
-  // this will detect changes to the status and tech fields and set a new observer if there is not one already
-  const hasObserver = row._mutationObserver;
-  if (!hasObserver) {
-    const config = {subtree: true, attributes: true, attributeFilter: ['data-bip-value']};
+  // detect changes to the other ticket table fields and set a new observer if there isn't one already
+  if (!row._mutationObserver) {
+    const config = { subtree: true, attributes: true, attributeFilter: ['data-bip-value'] };
     const observer = new MutationObserver(() => {
       setTimeout(initializeTicketTable, 500);
     });
@@ -23,7 +30,12 @@ function replaceCustomerLink(row) {
   }
 }
 
-// create a quick link for each ticket and direct it to the link that is in the most recent comment if there is one
+
+// Quick links is deprecated as of V2.0 since no viable solution fixes its functionality.
+// tickets.css has been removed from the manifest but the file is still in the /styles directory and assets are still available in the /assets/images directory
+// if this is re-enabled make sure to include 'quickLinksState' in chrome.storage.local.get() in the initializeTicketTable() function
+
+/* // create a quick link for each ticket and direct it to the link that is in the most recent comment if there is one
 function createQuickLink(row){
   const buttonContainer = document.createElement('td');
   const qlButton = document.createElement('button');
@@ -36,13 +48,13 @@ function createQuickLink(row){
   let internalBorder, externalBorder;
   qlPreview.style.left = '30%';
   if (bgColor === 'rgb(51, 51, 51)') {
-    qlButton.style.backgroundImage = `url(${chrome.runtime.getURL('/assets/link_black.png')})`;
+    qlButton.style.backgroundImage = `url(${chrome.runtime.getURL('/../assets/images/link_black.png')})`;
     qlButton.style.backgroundColor = 'white';
     qlButton.style.border = '2px solid #eaeaea';
     internalBorder = '2px solid #0277bd';
     externalBorder = '2px solid #ff8f00';
   } else {
-    qlButton.style.backgroundImage = `url(${chrome.runtime.getURL('/assets/link_white.png')})`;
+    qlButton.style.backgroundImage = `url(${chrome.runtime.getURL('/../assets/images/link_white.png')})`;
     qlButton.style.backgroundColor = 'rgb(54, 54, 54)';
     qlButton.style.border = '2px solid transparent';
     internalBorder = '2px solid #4fc3f7';
@@ -117,11 +129,13 @@ function setQuickLinkHeader() {
   qlHeader.appendChild(qlTooltip);
   qlHeaderContainer.appendChild(qlHeader);
   header.appendChild(qlHeaderContainer);
-}
+} */
 
-// turns each 'charges' field to a button that is able to add charges directly from the tickets screen
+
+// turns each 'charges' field to a button if enabled that is able to add charges directly from the tickets screen
 function createChargesLink(row) {
   setTimeout(() => {
+    // build the charges button
     const chargesWindow = document.getElementById('ajax-modal-alt');
     const charges = row.querySelector('.ticket-charges');
     const rootURL = row.querySelector('.typed-pretty-link').href;
@@ -129,6 +143,7 @@ function createChargesLink(row) {
     const chargesLink = document.createElement('a');
     chargesLink.classList.add('btn', 'btn-default', 'btn-sm', 'ajax-modalize-alt', 'bhv-ChargesBtn', 'ticket-charges');
   
+    // set the button and wait for a click
     chargesLink.href = chargesURL;
     chargesLink.innerHTML = charges.innerHTML;
     chargesLink.addEventListener('click', function() {
@@ -177,7 +192,7 @@ function handleChargesWindow(chargesWindow) {
 function initializeTicketTable() {
   const rows = ticketTable.querySelectorAll('tbody tr');
   
-  chrome.storage.local.get(['legacyTicketState', 'quickLinksState', 'lastUpdatedState', 'chargesLinkState', 'forceSingleState'], function(result) {
+  chrome.storage.local.get(['legacyTicketState', 'lastUpdatedState', 'chargesLinkState', 'forceSingleState'], function(result) {
     // changes the customer link to the ticket link
     if (result.legacyTicketState) {
       rows.forEach((row) => {
@@ -185,22 +200,14 @@ function initializeTicketTable() {
       });
     }
 
-    // forces all tickets onto a single line
-    if (result.forceSingleState) {
-      // TODO: is this failproof? is the tableParent and tableContainer always at this path?
-      const tableParent = document.querySelector('#wrapper > div.main > div > div > div.row');
-      const tableContainer = document.querySelector('#wrapper > div.main > div > div');
-      tableParent.style.whiteSpace = 'nowrap';
-      tableContainer.style.width = 'fit-content';
-    }
-
-    // inserts quick links onto the end of each row
+    // Quick links is deprecated as of V2.0 since no viable solution fixes its functionality.
+    /* // inserts quick links onto the end of each row
     if (result.quickLinksState) {
       setQuickLinkHeader();
       rows.forEach((row) => {
         createQuickLink(row);
       });
-    }
+    } */
 
     // removes the last updated color tags
     if (result.lastUpdatedState) {
@@ -217,41 +224,27 @@ function initializeTicketTable() {
       rows.forEach((row) => {
         createChargesLink(row);
       });
-      setTimeout(() => {
-        const chargesButton = document.querySelector('.bhv-ChargesBtn');
-        const spinner = chargesButton.querySelector('.fa-spin');
-        
-        // if the charges buttons are stuck on a spinner, this payload will refresh the first ticket in the table to refresh all users
-        if (spinner) {
-          const authToken = document.getElementsByName('csrf-token')[0].getAttribute('content');
-          const firstTicketStatus = document.querySelector('.best_in_place').textContent;
-          const firstTicketURL = document.querySelector('.typed-pretty-link').href;
-          const refreshPayload = {
-            _method: "put",
-            "ticket[status]": firstTicketStatus,
-            authenticity_token: authToken,
-          };
+    }
 
-          fetch(firstTicketURL, {
-            method: "PUT",
-            headers: {
-                "Accept": "application/json",
-            },
-            body: new URLSearchParams(refreshPayload)
-          });
-        }
-      }, 3000);  // wait 3 seconds, then see if the spinner is active
+    // forces all tickets onto a single line
+    if (result.forceSingleState) {
+        const tableParent = document.querySelector('#wrapper > div.main > div > div > div.row');
+        const tableContainer = document.querySelector('#wrapper > div.main > div > div');
+        tableParent.style.whiteSpace = 'nowrap';
+        tableContainer.style.width = 'fit-content';
     }
   });
 
+  // this adds an observer if there is not one already to the ticket table. It will detect changes to the children and reinitilaize the table if triggered
   const hasObserver = ticketTable._mutationObserver;
   if (!hasObserver) {
-    const tableConfig = {childList: true};
     const tableObserver = new MutationObserver(() => {
-      initializeTicketTable();
+        setTimeout(() => {
+            initializeTicketTable();
+        }, 1000);
     });
-
-    tableObserver.observe(ticketTable, tableConfig);
+    
+    tableObserver.observe(ticketTable, {childList: true});
     ticketTable._mutationObserver = tableObserver;
   }
 }
