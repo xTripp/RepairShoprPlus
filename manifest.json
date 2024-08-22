@@ -31,7 +31,7 @@
                         "https://*.repairshopr.com/tickets/8*",
                         "https://*.repairshopr.com/tickets/9*"
                         ],
-            "js": ["/scripts/ticket_page.js", "/scripts/charges.js"],
+            "js": ["/scripts/charges.js"],
             "css": ["/styles/charges.css"]
         },
         {

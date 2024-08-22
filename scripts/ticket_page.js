@@ -1,4 +1,5 @@
-// makes sure that the code is not run on the 'tickets/#######/edit' or 'tickets/#######/intake_form' pages
+// This code was only used for the quick links feature but was deprecated as of v1.7. If the feature is reintroduced uncomment this section and add this file to the manifest content scripts "js" section of the multiple ticket pages entry
+/* // makes sure that the code is not run on the 'tickets/#######/edit' or 'tickets/#######/intake_form' pages
 if (!window.location.href.endsWith('edit') && !window.location.href.endsWith('intake_form')) {
     const url = window.location.href;
     const authToken = document.getElementsByName('csrf-token')[0].getAttribute('content');
@@ -58,3 +59,4 @@ if (!window.location.href.endsWith('edit') && !window.location.href.endsWith('in
         }, 500);  // 500ms timeout for new comment to load in the comment list
     }
 }
+*/

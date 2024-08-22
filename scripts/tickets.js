@@ -31,7 +31,7 @@ function replaceCustomerLink(row) {
 }
 
 
-// Quick links is deprecated as of V2.0 since no viable solution fixes its functionality.
+// Quick links is deprecated as of V1.7 since no viable solution fixes its functionality.
 // tickets.css has been removed from the manifest but the file is still in the /styles directory and assets are still available in the /assets/images directory
 // if this is re-enabled make sure to include 'quickLinksState' in chrome.storage.local.get() in the initializeTicketTable() function
 
@@ -200,7 +200,7 @@ function initializeTicketTable() {
       });
     }
 
-    // Quick links is deprecated as of V2.0 since no viable solution fixes its functionality.
+    // Quick links is deprecated as of V1.7 since no viable solution fixes its functionality.
     /* // inserts quick links onto the end of each row
     if (result.quickLinksState) {
       setQuickLinkHeader();
