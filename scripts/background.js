@@ -5,6 +5,13 @@ chrome.runtime.onInstalled.addListener((details) => {
     }
     if (details.reason === 'update') {
         chrome.tabs.create({url: '/../pages/install/update.html'});
+
+        // temporary code for v1.7 to remove quick links from chrome storage
+        chrome.storage.local.get(['quickLinksState'], function(result) {
+            if (result['quickLinksState'] !== undefined) {
+                chrome.storage.local.remove(['quickLinksState']);
+            }
+        });
     }
 
 	// Create context menu for custom colors

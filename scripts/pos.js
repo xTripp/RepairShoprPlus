@@ -1,3 +1,5 @@
+import { normalizeMoney } from "../utils/normalizeMoney";
+
 chrome.storage.local.get(['registerHistoryState', 'cardAutofillState', 'quickAutofillState', 'pennies', 'nickels', 'dimes', 'quarters', 'ones', 'twos', 'fives', 'tens', 'twenties', 'fifties', 'hundreds'],
 function (result) {
     const {
@@ -74,13 +76,13 @@ function (result) {
     // autofills card total if input box is present and checkbox is enabled
     if (cardBal && cardAutofillState) {
         cardAutofill.checked = cardAutofillState;
-        countElements[11].value = cardBal.textContent.split('$')[1];
+        countElements[11].value = normalizeMoney(cardBal.textContent.split('$')[1]);
     }
 
     // autofills quick total if input box is present and checkbox is enabled
     if (quickBal && quickAutofillState) {
         quickAutofill.checked = quickAutofillState;
-        countElements[12].value = parseFloat(quickBal.textContent.split('$')[1]);
+        countElements[12].value = normalizeMoney(quickBal.textContent.split('$')[1]);
     }
 
 

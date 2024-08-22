@@ -4,9 +4,10 @@ This extension makes changes to how the RepairShopr System functions and adds ne
 ---> CURRENT VERSION V2.0 <---
 V 1.7 (##/##/##):
 - Bug Fixes
-  - TODO autofill on payment page
+  - TODO autofill on payment page and fix variance
   - TODO upsell opportunities sometimes not showing up
-  - TODO Autofill checkboxes for more than 2 payment types
+  - TODO autofill checkboxes for more than 2 payment types
+  - TODO convert storage.local to storage.sync
 - Quick links setting is now removed and deprecated. If/when a solution is found it will return
 
 V 1.6.1 Hotfix (3/15/24):

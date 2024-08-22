@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const logo = document.getElementById('logo');
     const legacyTicketToggle = document.getElementById('option1');
-    const quickLinksToggle = document.getElementById('option2');
+    // const quickLinksToggle = document.getElementById('option2');  Quicklinks deprecated as of v1.7
     const lastUpdatedToggle = document.getElementById('option3');
     const chargesLinkToggle = document.getElementById('option4');
     const forceSingleToggle = document.getElementById('option5');
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
         ['legacyTicketState', 'quickLinksState', 'lastUpdatedState', 'chargesLinkState', 'forceSingleState', 'registerHistoryState', 'upsellOpportunityState', 'global24hTimeState', 'paymentSettingsState', 'colorCodedState'],
         function(result) {
             legacyTicketToggle.checked = result.legacyTicketState === true;
-            quickLinksToggle.checked = result.quickLinksState === true;
+            // quickLinksToggle.checked = result.quickLinksState === true;  Quicklinks deprecated as of v1.7
             lastUpdatedToggle.checked = result.lastUpdatedState === true;
             chargesLinkToggle.checked = result.chargesLinkState === true;
             forceSingleToggle.checked = result.forceSingleState === true;
@@ -37,10 +37,10 @@ document.addEventListener('DOMContentLoaded', function() {
             colorCodedToggle.checked = result.colorCodedState === true;
     });
 
-    let legacyTicketState, quickLinksState, lastUpdatedState, chargesLinkState, forceSingleState, registerHistoryState, upsellOpportunityState, global24hTimeState, paymentSettingsState, colorCodedState;
+    let legacyTicketState, lastUpdatedState, chargesLinkState, forceSingleState, registerHistoryState, upsellOpportunityState, global24hTimeState, paymentSettingsState, colorCodedState; // add quickLinksState if feature returned
     function updateStates() {
         legacyTicketState = legacyTicketToggle.checked;
-        quickLinksState = quickLinksToggle.checked;
+        // quickLinksState = quickLinksToggle.checked;  Quicklinks deprecated as of v1.7
         lastUpdatedState = lastUpdatedToggle.checked;
         chargesLinkState = chargesLinkToggle.checked;
         forceSingleState = forceSingleToggle.checked;
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     legacyTicketToggle.addEventListener('change', updateStates);
-    quickLinksToggle.addEventListener('change', updateStates);
+    // quickLinksToggle.addEventListener('change', updateStates);  Quicklinks deprecated as of v1.7
     lastUpdatedToggle.addEventListener('change', updateStates);
     chargesLinkToggle.addEventListener('change', updateStates);
     forceSingleToggle.addEventListener('change', updateStates);
@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
         chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
             chrome.storage.local.set({
                 legacyTicketState: legacyTicketState,
-                quickLinksState: quickLinksState,
+                // quickLinksState: quickLinksState,  Quicklinks deprecated as of v1.7
                 lastUpdatedState: lastUpdatedState,
                 chargesLinkState: chargesLinkState,
                 forceSingleState: forceSingleState,
