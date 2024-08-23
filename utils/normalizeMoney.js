@@ -1,4 +1,4 @@
-// This function converts the string of non-cash closing counts to the correct value format for RepairShopr regardless or locale
+// This function converts the string of non-cash closing counts to the correct value format for RepairShopr regardless of locale
 function normalizeMoney(value) {
     // Detect if the original decimal separator is a comma or dot
     const decimalSeparator = value.includes(',') && value.includes('.') ?

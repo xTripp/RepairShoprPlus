@@ -1,4 +1,4 @@
-chrome.storage.local.get(['global24hTimeState'], function(result) {
+chrome.storage.local.get(['global24hTimeState', 'colorCodedState'], function(result) {
     if (result.global24hTimeState) {
         setTimeout(function() {
             var timeRegex = /(\d{1,2}):(\d{2})\s?(AM|PM)/gi;
@@ -40,5 +40,9 @@ chrome.storage.local.get(['global24hTimeState'], function(result) {
                 }
             }
         }, 500); // 500ms timeout for page load
+    }
+
+    if (result.colorCodedState) {
+        
     }
 });
