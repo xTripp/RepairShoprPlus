@@ -228,8 +228,8 @@ function initializeTicketTable() {
 
     // forces all tickets onto a single line
     if (result.forceSingleState) {
-      const tableParent = document.querySelector("#section_body > div > div > div > div.row");
-      const tableContainer = document.querySelector("#section_body > div > div > div");
+      const tableParent = document.querySelector("#wrapper > div.main > div > div > div.row");
+      const tableContainer = document.querySelector("#wrapper > div.main > div > div");
       tableParent.style.whiteSpace = 'nowrap';
       tableContainer.style.width = 'fit-content';
     }
