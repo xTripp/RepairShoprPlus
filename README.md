@@ -5,11 +5,12 @@ This extension makes changes to how the RepairShopr System functions and adds ne
 
 **V1.7 (##/##/##):**
 - Bug Fixes
-  - TODO autofill on payment page and fix variance
-  - TODO upsell opportunities sometimes not showing up
-  - TODO autofill checkboxes for more than 2 payment types
+  - Fixed a bug in closing counts autofill for the POS open/close page where it would input extra currency separators causing RS to enter "0.00"
+  - Fixed the variance calculator on the POS open/close page to make it more clear
+  - Autofill checkboxes on the POS open/close page now support any number of payment methods instead of just CC and quick (autofill options will need to be re-enabled)
   - TODO convert storage.local to storage.sync
-- Quick links setting is now removed and deprecated. If/when a solution is found it will return
+  - TODO support edge 
+- The Quick links feature has been removed and deprecated. If/when a solution is found it will return
 
 
 **V1.6.1 Hotfix (3/15/24):**

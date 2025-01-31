@@ -57,7 +57,7 @@
             "16": "/assets/logo/icon-16x16.png",
             "48": "/assets/logo/icon-48x48.png",
             "128": "/assets/logo/icon-128x128.png"
-          }
+        }
     },
     "permissions": [
         "storage",
