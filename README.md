@@ -8,8 +8,8 @@ This extension makes changes to how the RepairShopr System functions and adds ne
   - Fixed a bug in closing counts autofill for the POS open/close page where it would input extra currency separators causing RS to enter "0.00"
   - Fixed the variance calculator on the POS open/close page to make it more clear
   - Autofill checkboxes on the POS open/close page now support any number of payment methods instead of just CC and quick (autofill options will need to be re-enabled)
-  - TODO convert storage.local to storage.sync
-  - TODO support edge 
+  - On Chrome, RS+ settings are now synced with your profile (if Chrome profile sync is enabled) for consistent settings across all your devices. If sync is not enabled, settings will still be saved locally.
+  - TODO support edge
 - The Quick links feature has been removed and deprecated. If/when a solution is found it will return
 
 

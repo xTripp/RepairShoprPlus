@@ -29,7 +29,7 @@ function replaceCustomerLink(row) {
 
 // Quick links is deprecated as of V1.7 since no viable solution fixes its functionality.
 // tickets.css has been removed from the manifest but the file is still in the /styles directory and assets are still available in the /assets/images directory
-// if this is re-enabled make sure to include 'quickLinksState' in chrome.storage.local.get() in the initializeTicketTable() function
+// if this is re-enabled make sure to include 'quickLinksState' in chrome.storage.sync.get() in the initializeTicketTable() function
 
 /* // create a quick link for each ticket and direct it to the link that is in the most recent comment if there is one
 function createQuickLink(row){
@@ -175,7 +175,7 @@ function handleChargesWindow(chargesWindow) {
 function initializeTicketTable() {
     const rows = ticketTable.querySelectorAll('tbody tr');
     
-    chrome.storage.local.get(['legacyTicketState', 'lastUpdatedState', 'chargesLinkState', 'forceSingleState'], function(result) {
+    chrome.storage.sync.get(['legacyTicketState', 'lastUpdatedState', 'chargesLinkState', 'forceSingleState'], function(result) {
         // changes the customer link to the ticket link
         if (result.legacyTicketState) {
             rows.forEach((row) => {

@@ -63,11 +63,5 @@
         "storage",
         "tabs",
         "contextMenus"
-    ],
-    "web_accessible_resources": [
-        {
-            "resources": ["/assets/images/link_black.png", "/assets/images/link_white.png"],
-            "matches": ["<all_urls>"]
-        }
     ]
 }

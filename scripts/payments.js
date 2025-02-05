@@ -1,4 +1,4 @@
-chrome.storage.local.get(['paymentSettingsState'], function(result) {
+chrome.storage.sync.get(['paymentSettingsState'], function(result) {
     if (result.paymentSettingsState) {
         //handle the page theme for style changes
         let darkMode = false;
@@ -94,7 +94,7 @@ chrome.storage.local.get(['paymentSettingsState'], function(result) {
 
 
         function loadState() {
-            chrome.storage.local.get(['paymentSettingsHidden', 'updatedPaymentUI', 'defaultPayment'], function(data) {
+            chrome.storage.sync.get(['paymentSettingsHidden', 'updatedPaymentUI', 'defaultPayment'], function(data) {
                 // set values of the settings loaded from chrome.storage
                 checkbox.checked = data.paymentSettingsHidden;
                 updatedUI.checked = data.updatedPaymentUI;
@@ -146,7 +146,7 @@ chrome.storage.local.get(['paymentSettingsState'], function(result) {
         }
 
         function saveState() {
-            chrome.storage.local.set({
+            chrome.storage.sync.set({
                 paymentSettingsHidden: checkbox.checked,
                 updatedPaymentUI: updatedUI.checked,
                 defaultPayment: defaultPayment.value

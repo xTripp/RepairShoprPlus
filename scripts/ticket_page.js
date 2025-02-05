@@ -60,3 +60,11 @@ if (!window.location.href.endsWith('edit') && !window.location.href.endsWith('in
     }
 }
 */
+
+// Manifest portion needed for quicklinks
+// "web_accessible_resources": [
+//     {
+//         "resources": ["/assets/images/link_black.png", "/assets/images/link_white.png"],
+//         "matches": ["<all_urls>"]
+//     }
+// ]

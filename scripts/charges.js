@@ -1,4 +1,4 @@
-chrome.storage.local.get(['upsellOpportunityState'], function(result) {
+chrome.storage.sync.get(['upsellOpportunityState'], function(result) {
     if (result.upsellOpportunityState) {
         const popupDisplay = document.getElementById('ajax-modal-alt');
         const observer = new MutationObserver(mutationsList => {
@@ -6,7 +6,7 @@ chrome.storage.local.get(['upsellOpportunityState'], function(result) {
                 if (mutation.attributeName === 'style') {
                     const style = popupDisplay.getAttribute('style');
                     if (style.includes('display: block')) {
-                        chrome.storage.local.get(['items'], function(result) {
+                        chrome.storage.sync.get(['items'], function(result) {
                             if (result.items) {
                                 createItems(result.items);
                             }

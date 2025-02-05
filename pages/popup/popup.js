@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
         chrome.tabs.create({url: chrome.runtime.getURL('./colors.html')});
     });
 
-    chrome.storage.local.get(
+    chrome.storage.sync.get(
         ['legacyTicketState', 'quickLinksState', 'lastUpdatedState', 'chargesLinkState', 'forceSingleState', 'registerHistoryState', 'upsellOpportunityState', 'global24hTimeState', 'paymentSettingsState', 'colorCodedState'],
         function(result) {
             legacyTicketToggle.checked = result.legacyTicketState === true;
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // when the apply button is pressed: save all settings to storage, close the popup window, and refresh the page if on repairshopr
     applyButton.addEventListener('click', function() {
         chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-            chrome.storage.local.set({
+            chrome.storage.sync.set({
                 legacyTicketState: legacyTicketState,
                 // quickLinksState: quickLinksState,  Quicklinks deprecated as of v1.7
                 lastUpdatedState: lastUpdatedState,
@@ -130,7 +130,7 @@ function loadSettingsPage() {
 
 // take all local values saved and create an html block to display the content
 function getSettings(callback) {
-    chrome.storage.local.get(null, function(items) {
+    chrome.storage.sync.get(null, function(items) {
         let bodyContent = '';
         for (let key in items) {
             bodyContent += `<p>${key}: ${items[key]}</p>`;
@@ -141,7 +141,7 @@ function getSettings(callback) {
 
 // take all local values and encode its contents into a backup code
 function generateBackupCode(callback) {
-    chrome.storage.local.get(null, function(items) {
+    chrome.storage.sync.get(null, function(items) {
         const backupData = JSON.stringify(items);
         const backupCode = encodeBackupData(backupData);
         callback(backupCode);
@@ -157,7 +157,7 @@ function restoreFromBackupCode(code) {
     
     try {
         const restoredSettings = JSON.parse(decodedData);
-        chrome.storage.local.set(restoredSettings);
+        chrome.storage.sync.set(restoredSettings);
         backupCode.classList.add('valid-placeholder');
         backupCode.setAttribute('placeholder', 'Settings imported successfully!');
     } catch {
