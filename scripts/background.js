@@ -13,7 +13,7 @@ chrome.runtime.onInstalled.addListener((details) => {
 			}
 		});
 
-        // migrate chrome.storage.local to chrome.storage.sync safely
+        // migrate any chrome.storage.local data to chrome.storage.sync safely if possible
         // Check if chrome.storage.sync is available
         chrome.storage.sync.getBytesInUse(null, function (bytes) {
             if (chrome.runtime.lastError) {

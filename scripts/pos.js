@@ -163,7 +163,7 @@ chrome.storage.sync.get(null, function (result) {
             // Save all autofill states
             Object.keys(autofillCheckboxes).forEach(stateName => {
                 const autofillCheckbox = autofillCheckboxes[stateName];
-                state[`${stateName}AutofillState`] = autofillCheckbox?.checked || false;
+                state[stateName] = autofillCheckbox?.checked || false;
             });
 
             chrome.storage.sync.set(state);

@@ -18,7 +18,9 @@ function replaceCustomerLink(row) {
     if (!row._mutationObserver) {
         const config = { subtree: true, attributes: true, attributeFilter: ['data-bip-value'] };
         const observer = new MutationObserver(() => {
-            setTimeout(initializeTicketTable, 500);
+            window.addEventListener('load', () => {
+                initializeTicketTable();
+            });
         });
 
         observer.observe(row, config);
@@ -130,7 +132,7 @@ function setQuickLinkHeader() {
 
 // turns each 'charges' field to a button if enabled that is able to add charges directly from the tickets page
 function createChargesLink(row) {
-    setTimeout(() => {
+    window.addEventListener('load', () => {
         // build the charges button
         const chargesWindow = document.getElementById('ajax-modal-alt');
         const charges = row.querySelector('.ticket-charges');
@@ -138,18 +140,18 @@ function createChargesLink(row) {
         const chargesURL = rootURL + '/view_charges';
         const chargesLink = document.createElement('a');
         chargesLink.classList.add('btn', 'btn-default', 'btn-sm', 'ajax-modalize-alt', 'bhv-ChargesBtn', 'ticket-charges');
-    
+
         // set the button and wait for a click
         chargesLink.href = chargesURL;
         chargesLink.innerHTML = charges.innerHTML;
         chargesLink.addEventListener('click', function() {
-            setTimeout(() => {
+            window.addEventListener('load', () => {
                 handleChargesWindow(chargesWindow);
-            }, 500);  // wait for page content to load
+            });
         });
-    
+
         charges.parentNode.replaceChild(chargesLink, charges);
-    }, 500);  // prevent button from loading before charges values
+    });
 }
 
 // observe if changes are made and listen to button presses
@@ -222,9 +224,9 @@ function initializeTicketTable() {
     const hasObserver = ticketTable._mutationObserver;
     if (!hasObserver) {
         const tableObserver = new MutationObserver(() => {
-            setTimeout(() => {
+            window.addEventListener('load', () => {
                 initializeTicketTable();
-            }, 1000);
+            });
         });
         
         tableObserver.observe(ticketTable, {childList: true});
