@@ -90,7 +90,7 @@ chrome.runtime.onInstalled.addListener((details) => {
 		if (info.menuItemId === "colorizeElement") {
 			chrome.scripting.executeScript({
 				target: { tabId: tab.id },
-				function: addColorToElement
+				files: ["colorManager.js"]
 			});
 		}
 	});

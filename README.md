@@ -7,6 +7,7 @@ This extension makes changes to how the RepairShopr System functions and adds ne
 - NEW FEATURE: Color-coded Elements (BETA)
   - Adds a RS+ option in the right-click context menu on the RepairShopr site that allows for assigning a color to the selected element
   - All system issues, statuses, and, techs have the ability to be color-coded from the config page linked to the right of the Color-coded option in the settings menu
+  - TODO export/import themes
 - The Quick links feature has been removed and deprecated. If/when a solution is found it will return
 - Bug Fixes
   - Fixed a bug that caused some features to not work intermittently due to longer page load times
@@ -14,10 +15,9 @@ This extension makes changes to how the RepairShopr System functions and adds ne
   - Fixed the variance calculator on the POS open/close page to make it more clear
   - Autofill checkboxes on the POS open/close page now support any number of payment methods instead of just CC and quick (autofill options will need to be re-enabled)
   - On Chrome, RS+ settings are now synced with your profile (if Chrome profile sync is enabled) for consistent settings across all your devices. If sync is not enabled, settings will still be saved locally.
-  - TODO upsell opportunities animation
   - TODO support edge
   - TODO update welcome/update pages
-  - uninstall unpacked ext before closing
+  - uninstall unpacked ext before closing counts
 
 
 **V1.6.1 Hotfix (3/15/24):**

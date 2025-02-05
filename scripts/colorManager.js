@@ -1,0 +1,1 @@
+// This code is run after the user clicks "Set element color" in the context menu

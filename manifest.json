@@ -62,6 +62,7 @@
     "permissions": [
         "storage",
         "tabs",
-        "contextMenus"
+        "contextMenus",
+        "scripting"
     ]
 }

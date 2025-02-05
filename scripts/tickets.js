@@ -1,7 +1,3 @@
-// rename upsell opportunities to quick add items or something like that
-// forgot to put the autofill x2 things back
-// print stateName at every part to see what the string should be or test on front computer
-
 // replace the customer link with the corresponding ticket link and observe all changes made to the tickets to make sure the links stay set correctly
 function replaceCustomerLink(row) {
     const customerLink = Array.from(row.querySelectorAll('a')).find(link => link.href.includes('/customers/'));

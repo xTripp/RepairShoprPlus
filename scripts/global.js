@@ -41,9 +41,30 @@ chrome.storage.sync.get(['global24hTimeState', 'colorCodedState'], function(resu
             }
         });
     }
-    
+
 
     if (result.colorCodedState) {
+        // Initialize all current system issues, statuses, and, techs and save them to chrome storage
+        const url = new URL(window.location.href);
+        if (url.hostname.endsWith(".repairshopr.com") && url.pathname === "/tickets") {
+            let status = [], issue = [], tech = [];
+            const firstTicket = document.querySelector("#bhv-ticketTable tbody tr");
         
+            // Get all custom issues, statuses, and techs and store them in their own arrays
+            firstTicket.querySelectorAll("td").forEach(td => {
+                if (td.querySelector("b.tablesaw-cell-label") && td.querySelector("b.tablesaw-cell-label").innerText.includes("Status")) {
+                    status = JSON.parse(td.querySelector('span[data-bip-collection]').getAttribute('data-bip-collection')).map(arr => arr[1]);
+                }
+                if (td.querySelector("b.tablesaw-cell-label") && td.querySelector("b.tablesaw-cell-label").innerText.includes("Issue")) {
+                    issue = JSON.parse(td.querySelector('span[data-bip-collection]').getAttribute('data-bip-collection')).map(arr => arr[1]);
+                }
+                if (td.querySelector("b.tablesaw-cell-label") && td.querySelector("b.tablesaw-cell-label").innerText.includes("Tech")) {
+                    tech = JSON.parse(td.querySelector('span[data-bip-collection]').getAttribute('data-bip-collection')).map(arr => arr[1]);
+                }
+            });
+
+            // If the field is not stored in the colors object then add it and give it a color
+            
+        }
     }
 });
