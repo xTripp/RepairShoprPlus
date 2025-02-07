@@ -109,7 +109,11 @@ class Item {
 
 
 // ENTRY POINT
-document.addEventListener('DOMContentLoaded', loadState);
+document.addEventListener('DOMContentLoaded', () => {
+    loadState();
+    window.addEventListener('beforeunload', removeUnsavedItems);
+});
+
 
 const itemTable = document.getElementById('upsell-items');
 const tableAnchor = document.getElementById('anchor');
@@ -136,14 +140,24 @@ function loadState() {
 }
 
 function saveState() {
-    // select all rows with items and save each item and upc pair to a json element
-    const itemRows = Array.from(itemTable.querySelectorAll('tr')).slice(1, -1);
+    // Select all rows, excluding unsaved
+    const itemRows = Array.from(itemTable.querySelectorAll('tr')).slice(1, -1).filter(row => 
+        !row.querySelector('.create') // Exclude rows that haven't been confirmed
+    );
+
     const items = itemRows.map(row => ({
         item: row.cells[0].textContent,
         upc: row.cells[1].textContent
     }));
 
     chrome.storage.sync.set({items: items});
+}
+
+// Remove created items if they are not saved before closing the page
+function removeUnsavedItems() {
+    document.querySelectorAll('.create').forEach(button => {
+        button.closest('tr').remove();
+    });
 }
 
 // draggable item list functions

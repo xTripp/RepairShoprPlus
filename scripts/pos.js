@@ -26,8 +26,7 @@ chrome.storage.sync.get(null, function (result) {
 
         // Initialize autofillStates dynamically from autofill keys
         const autofillStates = autofillKeys.reduce((acc, key) => {
-            const stateName = key.replace('AutofillState', '');
-            acc[stateName] = result[key];
+            acc[key] = result[key];
             return acc;
         }, {});
 
@@ -56,7 +55,7 @@ chrome.storage.sync.get(null, function (result) {
             // If the input box for the autofill is present, create the checkbox
             if (paymentInputBox) {
                 paymentInputBox.style.marginBottom = 0;
-                const autofillCheckbox = createAutofillCheckbox(paymentInputBox);
+                const autofillCheckbox = createAutofillCheckbox(stateName, paymentInputBox);
                 autofillCheckbox.checked = autofillStates[stateName];
                 autofillCheckboxes[stateName] = autofillCheckbox;
             }
@@ -101,14 +100,17 @@ chrome.storage.sync.get(null, function (result) {
         }
 
         // Autofill balances if checkboxes are enabled
-        Object.keys(autofillCheckboxes).forEach(stateName => {
+        function autofillInput(stateName, onCheck = false) {
             const balElement = [...document.getElementById(`register_close_${stateName.replace('AutofillState', '')}`).parentElement.parentElement.children]
                 .find(child => child.id !== `register_close_${stateName.replace('AutofillState', '')}`);
             const countIndex = Object.keys(autofillStates).indexOf(stateName) + 11; // starting at index 11 for autofill items
 
-            if (countElements[countIndex] && autofillStates[stateName]) {
+            if (countElements[countIndex] && (autofillStates[stateName] || onCheck)) {
                 countElements[countIndex].value = normalizeMoney(balElement.textContent.split(' ').pop());
             }
+        }
+        Object.keys(autofillCheckboxes).forEach(stateName => {
+            autofillInput(stateName);
         });
 
         // Function to set placeholders based on open/close states
@@ -130,7 +132,7 @@ chrome.storage.sync.get(null, function (result) {
         }
 
         // Function to create an autofill checkbox
-        function createAutofillCheckbox(container) {
+        function createAutofillCheckbox(stateName, container) {
             const checkboxContainer = document.createElement('div');
             checkboxContainer.style.marginTop = "-10px";
             checkboxContainer.className = 'ui-checkbox-container';
@@ -147,6 +149,12 @@ chrome.storage.sync.get(null, function (result) {
             checkboxContainer.appendChild(labelText);
         
             container.insertAdjacentElement('beforebegin', checkboxContainer);
+
+            checkbox.addEventListener('change', () => {
+                if (checkbox.checked) {
+                    autofillInput(stateName, true);
+                }
+            });
         
             return checkbox;
         }

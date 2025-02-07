@@ -17,7 +17,8 @@ This extension makes changes to how the RepairShopr System functions and adds ne
   - On Chrome, RS+ settings are now synced with your profile (if Chrome profile sync is enabled) for consistent settings across all your devices. If sync is not enabled, settings will still be saved locally.
   - TODO support edge
   - TODO update welcome/update pages
-  - uninstall unpacked ext before closing counts
+  - TODO add links to previous updates in welcome/update pages
+  - charges buttons/customer links not loading all the time?
 
 
 **V1.6.1 Hotfix (3/15/24):**
