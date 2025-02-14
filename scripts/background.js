@@ -88,14 +88,20 @@ chrome.runtime.onInstalled.addListener((details) => {
     // Handle the context menu event
     chrome.contextMenus.onClicked.addListener((info, tab) => {
         if (info.menuItemId === "colorizeElement") {
-            // Request the JS path for the element selected from the content script
-            chrome.tabs.sendMessage(tab.id, { action: "getElementPath" }, (response) => {
-                // If the content script replied with the JS path, send it back with the action 'colorizeElement' to apply colors
-                if (response && response.elementPath) {
-                    chrome.tabs.sendMessage(tab.id, {
-                        action: "colorizeElement",
-                        elementPath: response.elementPath
+            chrome.storage.sync.get(['colorCodedState'], function(result) {
+                if (result.colorCodedState) {
+                    // Request the JS path for the element selected from the content script
+                    chrome.tabs.sendMessage(tab.id, { action: "getElementPath" }, (response) => {
+                        // If the content script replied with the JS path, send it back with the action 'colorizeElement' to apply colors
+                        if (response && response.elementPath) {
+                            chrome.tabs.sendMessage(tab.id, {
+                                action: "colorizeElement",
+                                elementPath: response.elementPath
+                            });
+                        }
                     });
+                } else {
+                    chrome.tabs.sendMessage(tab.id, {action: "enableCCElements"})
                 }
             });
         }

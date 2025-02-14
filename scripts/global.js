@@ -44,12 +44,12 @@ chrome.storage.sync.get(['global24hTimeState', 'colorCodedState'], function(resu
 
 
     if (result.colorCodedState) {
-        // Initialize all current system issues, statuses, and, techs and save them to chrome storage
+        // Initialize all current system issues, statuses, and techs and save them to chrome storage
         const url = new URL(window.location.href);
         if (url.hostname.endsWith(".repairshopr.com") && url.pathname === "/tickets") {
             let status = [], issue = [], tech = [];
             const firstTicket = document.querySelector("#bhv-ticketTable tbody tr");
-        
+    
             // Get all custom issues, statuses, and techs and store them in their own arrays
             firstTicket.querySelectorAll("td").forEach(td => {
                 if (td.querySelector("b.tablesaw-cell-label") && td.querySelector("b.tablesaw-cell-label").innerText.includes("Status")) {
@@ -62,9 +62,27 @@ chrome.storage.sync.get(['global24hTimeState', 'colorCodedState'], function(resu
                     tech = JSON.parse(td.querySelector('span[data-bip-collection]').getAttribute('data-bip-collection')).map(arr => arr[1]);
                 }
             });
-
-            // If the field is not stored in the colors object then add it and give it a color
-            
+    
+            // Retrieve existing bipcolors and update storage
+            chrome.storage.sync.get(["bipcolors"], (data) => {
+                let colors = data.bipcolors || {}; // Retrieve existing colors or initialize an empty object
+    
+                // Helper function to add missing entries
+                function addMissingEntries(category, categoryName) {
+                    category.forEach(item => {
+                        if (!(item in colors)) {
+                            colors[item] = [null, categoryName];
+                        }
+                    });
+                }
+    
+                addMissingEntries(status, "status");
+                addMissingEntries(issue, "issue");
+                addMissingEntries(tech, "tech");
+    
+                chrome.storage.sync.set({bipcolors: colors});
+            });
         }
     }
+    
 });

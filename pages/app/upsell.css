@@ -24,6 +24,22 @@ h2 {
     font-size: 18px;
 }
 
+a {
+    color: whitesmoke;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.current-page {
+    background-color: #5e5e5e;
+    padding: 5px;
+    padding-right: 10px;
+    border-radius: 15px 15px 0 0;
+}
+
 #logo {
     height: 48px;
     width: 48px;

@@ -14,9 +14,9 @@ function replaceCustomerLink(row) {
     if (!row._mutationObserver) {
         const config = { subtree: true, attributes: true, attributeFilter: ['data-bip-value'] };
         const observer = new MutationObserver(() => {
-            window.addEventListener('load', () => {
+            setTimeout(() => {
                 initializeTicketTable();
-            });
+            }, 500);
         });
 
         observer.observe(row, config);
@@ -128,7 +128,7 @@ function setQuickLinkHeader() {
 
 // turns each 'charges' field to a button if enabled that is able to add charges directly from the tickets page
 function createChargesLink(row) {
-    window.addEventListener('load', () => {
+    setTimeout(() => {
         // build the charges button
         const chargesWindow = document.getElementById('ajax-modal-alt');
         const charges = row.querySelector('.ticket-charges');
@@ -141,13 +141,13 @@ function createChargesLink(row) {
         chargesLink.href = chargesURL;
         chargesLink.innerHTML = charges.innerHTML;
         chargesLink.addEventListener('click', function() {
-            window.addEventListener('load', () => {
+            setTimeout(() => {
                 handleChargesWindow(chargesWindow);
-            });
+            }, 200);
         });
 
         charges.parentNode.replaceChild(chargesLink, charges);
-    });
+    }, 500);
 }
 
 // observe if changes are made and listen to button presses
@@ -220,9 +220,9 @@ function initializeTicketTable() {
     const hasObserver = ticketTable._mutationObserver;
     if (!hasObserver) {
         const tableObserver = new MutationObserver(() => {
-            window.addEventListener('load', () => {
+            setTimeout(() => {
                 initializeTicketTable();
-            });
+            }, 500);
         });
         
         tableObserver.observe(ticketTable, {childList: true});

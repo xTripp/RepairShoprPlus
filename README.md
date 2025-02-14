@@ -8,9 +8,10 @@ This extension makes changes to how the RepairShopr System functions and adds ne
   - Adds a RS+ option in the right-click context menu on the RepairShopr site that allows for assigning a color to the selected element
   - All system issues, statuses, and, techs have the ability to be color-coded from the config page linked to the right of the Color-coded option in the settings menu
   - TODO export/import themes
+  - TODO remove element color context option
+  - TODO sometimes set element color just doesnt work, there are no errors but it wont work until the extension is reloaded
 - The Quick links feature has been removed and deprecated. If/when a solution is found it will return
 - Bug Fixes
-  - Fixed a bug that caused some features to not work intermittently due to longer page load times
   - Fixed a bug in closing counts autofill for the POS open/close page where it would input extra currency separators causing RS to enter "0.00"
   - Fixed the variance calculator on the POS open/close page to make it more clear
   - Autofill checkboxes on the POS open/close page now support any number of payment methods instead of just CC and quick (autofill options will need to be re-enabled)
@@ -18,7 +19,7 @@ This extension makes changes to how the RepairShopr System functions and adds ne
   - TODO support edge
   - TODO update welcome/update pages
   - TODO add links to previous updates in welcome/update pages
-  - charges buttons/customer links not loading all the time?
+  - TODO convert charges and ticket table observers to stop using timeout
 
 
 **V1.6.1 Hotfix (3/15/24):**

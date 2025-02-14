@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
         chrome.tabs.create({url: chrome.runtime.getURL('/../pages/app/upsell.html')});
     });
     colorCodedConfig.addEventListener('click', function() {
-        chrome.tabs.create({url: chrome.runtime.getURL('./colors.html')});
+        chrome.tabs.create({url: chrome.runtime.getURL('/../pages/app/colors.html')});
     });
 
     chrome.storage.sync.get(

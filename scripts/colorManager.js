@@ -6,6 +6,10 @@ document.addEventListener("contextmenu", (event) => {
 
 // Main cycle for dynamic color setting
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if (message.action === "enableCCElements") {
+        alert("You must enable the \"Enable Color-coded Elements\" option in the RS+ options menu first.");
+    }
+
     // If an element was right clicked and a request message was received from background.js, return the element's JS path
     if (message.action === "getElementPath" && lastRightClickedElement) {
         sendResponse({elementPath: getJSPath(lastRightClickedElement)});
@@ -13,95 +17,89 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
     // If all is successful set the color based on user input
     if (message.action === "colorizeElement") {
-        showColorPicker(message.elementPath);
+        let element = document.querySelector(message.elementPath);
+        
+        if (element) {
+            function askForColor() {
+                const userColor = prompt("Enter a color name (Blue, SeaGreen, etc.) or hex code (#FF0000) for this element:\n\nSee this website for all valid colors:\nhttps://www.w3schools.com/cssref/css_colors.php", "RoyalBlue");
+    
+                // User pressed cancel, do nothing
+                if (userColor === null) {
+                    return;
+                }
+    
+                // Create a temporary element to check if the color is valid
+                const temp = document.createElement("div");
+                temp.style.color = userColor;
+    
+                if (temp.style.color) {
+                    element.style.backgroundColor = userColor;
+                    // Save the assigned color to the colors array
+                    chrome.storage.sync.get(["colors"], (data) => {
+                        let colors = data.colors || {}; // Retrieve existing colors or initialize empty object
+                    
+                        // Add or update the path entry
+                        colors[message.elementPath] = [userColor, element.textContent];
+                    
+                        chrome.storage.sync.set({colors});
+                    });
+                    
+                } else {
+                    alert("Invalid CSS color. Please enter a valid color name or hex code.\n\nSee this website for all valid colors:\nhttps://www.w3schools.com/cssref/css_colors.php");
+                    askForColor();
+                }
+            }
+    
+            askForColor();
+        } else {
+            alert("Something went wrong. This element cannot be modified at this time");
+            console.warn("Element not found:", message.elementPath);
+        }
     }
     
 });
 
 // Apply all saved colors for elements that are present on the page
+chrome.storage.sync.get(['colorCodedState'], function(result) {
+    if (result.colorCodedState) {
+        chrome.storage.sync.get(["colors"], (data) => {
+            if (!data.colors) return;
+        
+            Object.entries(data.colors).forEach(([path, color]) => {
+                let element = document.querySelector(path);
+                if (element) {
+                    element.style.backgroundColor = color[0];
+                }
+            });
+        });
 
+        // Observe changes to the ticket table and reload colored elements if detected
+        const ticketTable = document.getElementById('bhv-ticketTable');
+        if (ticketTable && !ticketTable._mutationObserver2) {
+            const observer = new MutationObserver(() => setBIPColors());
+            observer.observe(ticketTable, {childList: true});
+            ticketTable._mutationObserver2 = observer;
+        }
 
-// Color Picker Modal
-function showColorPicker(elementPath) {
-    // Check if modal already exists
-    if (document.getElementById("colorModal")) {
-        document.getElementById("colorModal").style.display = "flex";
-        return;
+        // Set colors for each "best in place" element on the page
+        function setBIPColors() {
+            chrome.storage.sync.get(["bipcolors"], (data) => {
+                if (!data.bipcolors) return;
+            
+                Object.entries(data.bipcolors).forEach(([text, color]) => {
+                    let elements = document.querySelectorAll(".best_in_place");
+                    
+                    elements.forEach((element) => {
+                        if (element.textContent.trim() === text.trim()) {
+                            element.style.backgroundColor = color[0];
+                        }
+                    });
+                });            
+            });
+        }
+        setBIPColors();
     }
-
-    // Create the modal HTML
-    const modal = document.createElement("div");
-    modal.id = "colorModal";
-    modal.innerHTML = `
-        <div class="color-modal-content">
-            <p>Enter a CSS color for the element:</p>
-            <input type="text" id="colorModalInput" placeholder="e.g., SeaGreen">
-            <p><a href="https://www.w3schools.com/cssref/css_colors.php" target="_blank">Click here for valid colors</a></p>
-            <button id="colorModalConfirm">OK</button>
-            <button id="colorModalCancel">Cancel</button>
-        </div>
-    `;
-
-    // Style the modal (scoped to avoid affecting other elements)
-    const style = document.createElement("style");
-    style.textContent = `
-        #colorModal {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5);
-            display: flex; justify-content: center; align-items: center;
-            z-index: 9999;
-        }
-        .color-modal-content {
-            background: white; padding: 20px; border-radius: 8px;
-            text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-        #colorModalInput {
-            margin: 10px 0; padding: 5px; width: 80%;
-            border: 1px solid #ccc; border-radius: 4px;
-            font-size: 14px;
-        }
-        #colorModalConfirm, #colorModalCancel {
-            margin: 5px; padding: 8px 12px;
-            cursor: pointer; font-size: 14px;
-            border: none; border-radius: 4px;
-        }
-        #colorModalConfirm {
-            background: #28a745; color: white;
-        }
-        #colorModalCancel {
-            background: #dc3545; color: white;
-        }
-        #colorModalConfirm:hover {
-            background: #218838;
-        }
-        #colorModalCancel:hover {
-            background: #c82333;
-        }
-    `;
-
-    // Append modal and styles to the page
-    document.body.appendChild(modal);
-    document.head.appendChild(style);
-
-    // Event listeners for buttons
-    document.getElementById("colorModalConfirm").addEventListener("click", function () {
-        const userColor = document.getElementById("colorModalInput").value.trim();
-        const temp = document.createElement("div");
-        temp.style.color = userColor;
-
-        if (temp.style.color) {
-            document.querySelector(elementPath).style.backgroundColor = userColor;
-            modal.remove(); // Remove modal after setting the color
-        } else {
-            alert("Invalid CSS color. Please enter a valid color.");
-        }
-    });
-
-    document.getElementById("colorModalCancel").addEventListener("click", function () {
-        modal.remove(); // Remove modal on cancel
-    });
-}
+});
 
 // Returns a string with the JS path of an element
 function getJSPath(element) {
