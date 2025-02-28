@@ -84,5 +84,4 @@ chrome.storage.sync.get(['global24hTimeState', 'colorCodedState'], function(resu
             });
         }
     }
-    
 });

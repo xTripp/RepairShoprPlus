@@ -10,6 +10,14 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         alert("You must enable the \"Enable Color-coded Elements\" option in the RS+ options menu first.");
     }
 
+    if (message.action === "elementNotFound") {
+        alert("The element you selected does not currently have a custom color set or the element cannot be modified. Check the RS+ color configuration menu in the options window for the element you are trying to modify.");
+    }
+
+    if (message.action === "uncolorizeElement") {
+        alert("The element you selected has been reset. Refresh the page for changes to apply.");
+    }
+
     // If an element was right clicked and a request message was received from background.js, return the element's JS path
     if (message.action === "getElementPath" && lastRightClickedElement) {
         sendResponse({elementPath: getJSPath(lastRightClickedElement)});
@@ -53,7 +61,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             askForColor();
         } else {
             alert("Something went wrong. This element cannot be modified at this time");
-            console.warn("Element not found:", message.elementPath);
+            console.warn("[RS+] Element not found:", message.elementPath);
         }
     }
     

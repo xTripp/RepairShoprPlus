@@ -1,20 +1,19 @@
 chrome.runtime.onInstalled.addListener((details) => {
-    // Detect if the extension was just installed or just updated and display the appropriate page
+    // Detect if the extension was just installed or updated and display the appropriate page
     if (details.reason === 'install') {
-        chrome.tabs.create({url: '/../pages/install/welcome.html'});
+        chrome.tabs.create({ url: '/../pages/install/welcome.html' });
     }
     if (details.reason === 'update') {
-        chrome.tabs.create({url: '/../pages/install/update.html'});
+        chrome.tabs.create({ url: '/../pages/install/update.html' });
 
-        // temporary code for v1.7 to remove quick links and autofill states from chrome storage
-		chrome.storage.local.get(['quickLinksState', 'cardAutofillState', 'quickAutofillState'], function(result) {
-			if (result.quickLinksState !== undefined || result.cardAutofillState !== undefined || result.quickAutofillState !== undefined) {
-				chrome.storage.local.remove(['quickLinksState', 'cardAutofillState', 'quickAutofillState']);
-			}
-		});
+        // Temporary code for v1.7 to remove quick links and autofill states from Chrome storage
+        chrome.storage.local.get(['quickLinksState', 'cardAutofillState', 'quickAutofillState'], function (result) {
+            if (result.quickLinksState !== undefined || result.cardAutofillState !== undefined || result.quickAutofillState !== undefined) {
+                chrome.storage.local.remove(['quickLinksState', 'cardAutofillState', 'quickAutofillState']);
+            }
+        });
 
-        // migrate any chrome.storage.local data to chrome.storage.sync safely if possible
-        // Check if chrome.storage.sync is available
+        // Migrate any chrome.storage.local data to chrome.storage.sync safely if possible
         chrome.storage.sync.getBytesInUse(null, function (bytes) {
             if (chrome.runtime.lastError) {
                 console.error('chrome.storage.sync is unavailable:', chrome.runtime.lastError);
@@ -77,33 +76,84 @@ chrome.runtime.onInstalled.addListener((details) => {
         });
     }
 
-	// Create context menu for custom colors
-	chrome.contextMenus.create({
-		id: "colorizeElement",
-		title: "Set Element Color",
-		contexts: ["all"],
-		documentUrlPatterns: ["https://*.repairshopr.com/*"]
-	});
+    createContextMenu();
+});
 
-    // Handle the context menu event
-    chrome.contextMenus.onClicked.addListener((info, tab) => {
-        if (info.menuItemId === "colorizeElement") {
-            chrome.storage.sync.get(['colorCodedState'], function(result) {
-                if (result.colorCodedState) {
-                    // Request the JS path for the element selected from the content script
-                    chrome.tabs.sendMessage(tab.id, { action: "getElementPath" }, (response) => {
-                        // If the content script replied with the JS path, send it back with the action 'colorizeElement' to apply colors
-                        if (response && response.elementPath) {
-                            chrome.tabs.sendMessage(tab.id, {
-                                action: "colorizeElement",
-                                elementPath: response.elementPath
-                            });
-                        }
-                    });
-                } else {
-                    chrome.tabs.sendMessage(tab.id, {action: "enableCCElements"})
-                }
-            });
-        }
+// Ensure the context menu is created on extension startup
+chrome.runtime.onStartup.addListener(() => {
+    createContextMenu();
+});
+
+function createContextMenu() {
+    chrome.contextMenus.create({
+        id: "colorizeElement",
+        title: "Set Element Color",
+        contexts: ["all"],
+        documentUrlPatterns: ["https://*.repairshopr.com/*"]
     });
+
+    chrome.contextMenus.create({
+        id: "uncolorizeElement",
+        title: "Remove Element Color",
+        contexts: ["all"],
+        documentUrlPatterns: ["https://*.repairshopr.com/*"]
+    });
+}
+
+// Handle the context menu event
+chrome.contextMenus.onClicked.addListener((info, tab) => {
+    if (info.menuItemId === "colorizeElement") {
+        // Check if color coded state is enabled
+        chrome.storage.sync.get(['colorCodedState'], function(result) {
+            if (result.colorCodedState) {
+                // Get the path for the selected element
+                chrome.tabs.sendMessage(tab.id, {action: "getElementPath"}, (response) => {
+                    if (response && response.elementPath) {
+                        // Send the colorized request
+                        chrome.tabs.sendMessage(tab.id, {
+                            action: "colorizeElement",
+                            elementPath: response.elementPath
+                        });
+                    }
+                });
+            } else {
+                chrome.tabs.sendMessage(tab.id, {action: "enableCCElements"});
+            }
+        });
+    } else if (info.menuItemId === "uncolorizeElement") {
+        // Check if color coded state is enabled
+        chrome.storage.sync.get(['colorCodedState'], function(result) {
+            if (result.colorCodedState) {
+                // Get the path for the selected element
+                chrome.tabs.sendMessage(tab.id, {action: "getElementPath"}, (response) => {
+                    if (response && response.elementPath) {
+                        // Remove the saved color from storage
+                        chrome.storage.sync.get(['colors'], (colorResult) => {
+                            if (colorResult.colors && colorResult.colors[response.elementPath]) {
+                                delete colorResult.colors[response.elementPath];
+        
+                                // Save the updated object back to storage
+                                chrome.storage.sync.set({ colors: colorResult.colors }, () => {
+                                    chrome.tabs.sendMessage(tab.id, {action: "uncolorizeElement"});
+                                });
+                            } else {
+                                chrome.tabs.sendMessage(tab.id, {action: "elementNotFound"});
+                            }
+                        });
+                    }
+                });
+            } else {
+                chrome.tabs.sendMessage(tab.id, {action: "enableCCElements"});
+            }
+        });        
+    }
+});
+
+// Keep background.js alive using alarms
+chrome.alarms.create("keepAlive", { periodInMinutes: 5 });
+
+chrome.alarms.onAlarm.addListener((alarm) => {
+    if (alarm.name === "keepAlive") {
+        console.log("Stayin alive, stayin alive...");
+    }
 });

@@ -97,3 +97,7 @@ td:nth-child(3n) {
 .title-head {
     border: 2px solid whitesmoke;
 }
+
+::-webkit-color-swatch{
+    border: none;
+}
