@@ -98,6 +98,13 @@ td:nth-child(3n) {
     border: 2px solid whitesmoke;
 }
 
+.missing-vals {
+    padding: 20px;
+    color: red;
+    text-align: center;
+    font-size: 36px;
+}
+
 ::-webkit-color-swatch{
     border: none;
 }

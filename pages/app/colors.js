@@ -2,10 +2,16 @@ const issueTable = document.getElementById("issue-table");
 const statusTable = document.getElementById("status-table");
 const techTable = document.getElementById("tech-table");
 
-chrome.storage.sync.get(["bipcolors"], function (result) {
-    if (!result.bipcolors) return;
+let bipcolors = {};
 
-    Object.entries(result.bipcolors).forEach(([key, value]) => {
+chrome.storage.sync.get(["bipcolors"], function (result) {
+    if (!result.bipcolors){
+        document.querySelector(".bip-tables").innerHTML = "<div class=\"missing-vals\">No table values found! Refresh the tickets page, then reload this page and try again.</div>";
+    }
+
+    bipcolors = result.bipcolors;
+
+    Object.entries(bipcolors).forEach(([key, value]) => {
         const [color, category] = value;
         let targetTable;
 
@@ -40,21 +46,17 @@ chrome.storage.sync.get(["bipcolors"], function (result) {
             colorInput.style.border = "3px dashed gray";
         }
 
-        // Event listener to save color changes
+        // Update local bipcolors object on change
         colorInput.addEventListener("input", function () {
-            const newColor = colorInput.value;
-
-            chrome.storage.sync.get(["bipcolors"], function (result) {
-                const updatedColors = result.bipcolors || {};
-                updatedColors[key] = [newColor, category];
-
-                colorInput.style.backgroundColor = color || "transparent";
-                console.log("color saved")
-                chrome.storage.sync.set({ bipcolors: updatedColors });
-            });
+            bipcolors[key] = [colorInput.value, category];
         });
 
         colorCell.appendChild(colorInput);
         nameCell.textContent = key;
     });
 });
+
+// Save all colors every second
+setInterval(() => {
+    chrome.storage.sync.set({bipcolors});
+}, 2000);
