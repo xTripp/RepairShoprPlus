@@ -150,7 +150,7 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
 });
 
 // Keep background.js alive using alarms
-chrome.alarms.create("keepAlive", { periodInMinutes: 5 });
+chrome.alarms.create("keepAlive", {periodInMinutes: 5});
 
 chrome.alarms.onAlarm.addListener((alarm) => {
     if (alarm.name === "keepAlive") {

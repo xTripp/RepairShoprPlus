@@ -56,17 +56,18 @@ a:hover {
 
 .bip-tables {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     justify-content: center;
 }
 
 table, th, td {
+    min-width: fit-content;
     margin: 40px;
     border-collapse: collapse;
 }
 
 th {
-    width: fit-content;
     font-size: 24px;
     padding: 10px 20px;
     color: whitesmoke;

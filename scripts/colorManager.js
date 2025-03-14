@@ -26,45 +26,62 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     // If all is successful set the color based on user input
     if (message.action === "colorizeElement") {
         let element = document.querySelector(message.elementPath);
-        
+
         if (element) {
-            function askForColor() {
-                const userColor = prompt("Enter a color name (Blue, SeaGreen, etc.) or hex code (#FF0000) for this element:\n\nSee this website for all valid colors:\nhttps://www.w3schools.com/cssref/css_colors.php", "RoyalBlue");
-    
-                // User pressed cancel, do nothing
-                if (userColor === null) {
+            function askForNickname() {
+                const nickname = prompt("Enter a nickname to identify this element:\nNOTE: This name will be used to identify the element on the color config page");
+
+                // If the user cancels the nickname prompt, do nothing
+                if (nickname === null || nickname.trim() === "") {
+                    alert("Nickname is required for custom elements. Try again.");
                     return;
                 }
-    
+
+                askForColor(nickname);
+            }
+
+            function askForColor(nickname) {
+                const userColor = prompt(
+                    "Enter a color name (Blue, SeaGreen, etc.) or hex code (#FF0000) color for this element:\nIf you would like to choose a color later on the config page, then select cancel now\n\nSee this website for all valid colors:\nhttps://www.w3schools.com/cssref/css_colors.php",
+                    "RoyalBlue"
+                );
+
+                // If the user cancels, store null as the color
+                if (userColor === null) {
+                    saveColor(nickname, null);
+                    return;
+                }
+
                 // Create a temporary element to check if the color is valid
                 const temp = document.createElement("div");
                 temp.style.color = userColor;
-    
+
                 if (temp.style.color) {
                     element.style.backgroundColor = userColor;
-                    // Save the assigned color to the colors array
-                    chrome.storage.sync.get(["colors"], (data) => {
-                        let colors = data.colors || {}; // Retrieve existing colors or initialize empty object
-                    
-                        // Add or update the path entry
-                        colors[message.elementPath] = [userColor, element.textContent];
-                    
-                        chrome.storage.sync.set({colors});
-                    });
-                    
+                    saveColor(nickname, userColor);
                 } else {
                     alert("Invalid CSS color. Please enter a valid color name or hex code.\n\nSee this website for all valid colors:\nhttps://www.w3schools.com/cssref/css_colors.php");
-                    askForColor();
+                    askForColor(nickname);
                 }
             }
-    
-            askForColor();
+
+            function saveColor(nickname, color) {
+                chrome.storage.sync.get(["colors"], (data) => {
+                    let colors = data.colors || {}; // Retrieve existing colors or initialize empty object
+
+                    // Add or update the path entry
+                    colors[message.elementPath] = [nickname, color, element.textContent];
+
+                    chrome.storage.sync.set({colors});
+                });
+            }
+
+            askForNickname();
         } else {
             alert("Something went wrong. This element cannot be modified at this time");
             console.warn("[RS+] Element not found:", message.elementPath);
         }
     }
-    
 });
 
 // Apply all saved colors for elements that are present on the page
@@ -73,13 +90,13 @@ chrome.storage.sync.get(['colorCodedState'], function(result) {
         chrome.storage.sync.get(["colors"], (data) => {
             if (!data.colors) return;
         
-            Object.entries(data.colors).forEach(([path, color]) => {
+            Object.entries(data.colors).forEach(([path, [_, color, savedText]]) => {
                 let element = document.querySelector(path);
-                if (element) {
-                    element.style.backgroundColor = color[0];
+                if (element && element.textContent.trim() === savedText.trim()) {
+                    element.style.backgroundColor = color;
                 }
             });
-        });
+        });        
 
         // Observe changes to the ticket table and reload colored elements if detected
         const ticketTable = document.getElementById('bhv-ticketTable');
