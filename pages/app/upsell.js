@@ -129,7 +129,7 @@ function createItem() {
 }
 
 function loadState() {
-    chrome.storage.sync.get(['items'], function(result) {
+    chrome.storage.local.get(['items'], function(result) {
         const items = result.items;
 
         // This will run through all items saved the previous session and recreate them in order so that it always appears the same
@@ -150,7 +150,7 @@ function saveState() {
         upc: row.cells[1].textContent
     }));
 
-    chrome.storage.sync.set({items: items});
+    chrome.storage.local.set({items: items});
 }
 
 // Remove created items if they are not saved before closing the page

@@ -6,24 +6,23 @@ This extension makes changes to how the RepairShopr System functions and adds ne
 **V1.7 (##/##/##):**
 - NEW FEATURE: Color-coded Elements (BETA)
   - Adds a RS+ option in the context menu (right-click) on the RepairShopr site that allows for assigning a color to the selected element
-  - All system issues, statuses, and, techs have the ability to be color-coded from the config page linked to the right of the Color-coded option in the RS+ settings menu
+  - All system issues, statuses, and, techs on the ticket page has the ability to be color-coded from the config page linked to the right of the Color-coded option in the RS+ settings menu
   - TODO export/import color themes only
-  - TODO TEST display message is bipcolors arent loaded yet on color config page
-  - TODO finish color manager page
-  - TODO custom color setting does not work when color config page is open
 - The Quick links feature has been removed and deprecated. If/when a solution is found it will return
 - Bug Fixes
   - Fixed a bug in the closing counts autofill for the POS open/close page where it would input extra currency separators causing RS to enter "0.00"
   - Fixed the variance calculator on the POS open/close page to make it more clear
   - Autofill checkboxes on the POS open/close page now support any number of payment methods instead of just CC and quick (autofill options will need to be re-enabled if previously enabled)
-  - On Chrome, RS+ settings are now synced with your profile (if Chrome profile sync is enabled) for consistent settings across all your devices. If sync is not enabled, settings will still be saved locally.
   - TODO support edge/firefox
   - TODO update welcome/update pages
   - TODO add links to previous updates in welcome/update pages
+  - TODO Make 1 or 2 presets for color coding
   - TODO convert charges and ticket table observers to stop using timeout
+  - TODO error with cloneNode on tickets page
   - TODO make a debug import/export to just be JSON or XML
   - TODO sentrix integration during PO and item creation
   - TODO font color customization
+  - TODO icon customization
 
 
 **V1.6.1 Hotfix (3/15/24):**

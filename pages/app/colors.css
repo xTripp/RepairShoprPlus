@@ -54,6 +54,26 @@ a:hover {
     background-color: #1f1f1f;
 }
 
+.usage-info {
+    margin: 20px 10%;
+    padding: 10px;
+    border: 4px black solid;
+    border-radius: 10px;
+    background-color: rgba(250, 235, 215, 0.5);
+    font-family: 'Gotham';
+    font-size: 36px;
+    font-weight: 600;
+}
+
+.usage-info ul {
+    margin: 10px;
+}
+
+.usage-info li {
+    padding: 5px;
+    font-size: 18px;
+}
+
 .bip-tables {
     display: flex;
     flex-wrap: wrap;
@@ -94,6 +114,13 @@ td:nth-child(3n) {
     background-color: #4e4e4e;
 }
 
+.color-input {
+    width: calc(100% - 2px);
+    margin: 1px;
+    border: 2px inset gray;
+    cursor: pointer;
+}
+
 .color-head,
 .title-head {
     border: 2px solid whitesmoke;
@@ -104,6 +131,7 @@ td:nth-child(3n) {
     color: red;
     text-align: center;
     font-size: 36px;
+    font-weight: 600;
 }
 
 ::-webkit-color-swatch{

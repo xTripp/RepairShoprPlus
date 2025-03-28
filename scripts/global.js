@@ -1,4 +1,4 @@
-chrome.storage.sync.get(['global24hTimeState', 'colorCodedState'], function(result) {
+chrome.storage.local.get(['global24hTimeState', 'colorCodedState'], function(result) {
     if (result.global24hTimeState) {
         window.addEventListener('load', function () {
             var timeRegex = /(\d{1,2}):(\d{2})\s?(AM|PM)/gi;
@@ -64,7 +64,7 @@ chrome.storage.sync.get(['global24hTimeState', 'colorCodedState'], function(resu
             });
     
             // Retrieve existing bipcolors and update storage
-            chrome.storage.sync.get(["bipcolors"], (data) => {
+            chrome.storage.local.get(["bipcolors"], (data) => {
                 let colors = data.bipcolors || {}; // Retrieve existing colors or initialize an empty object
     
                 // Helper function to add missing entries
@@ -80,7 +80,7 @@ chrome.storage.sync.get(['global24hTimeState', 'colorCodedState'], function(resu
                 addMissingEntries(issue, "issue");
                 addMissingEntries(tech, "tech");
     
-                chrome.storage.sync.set({bipcolors: colors});
+                chrome.storage.local.set({bipcolors: colors});
             });
         }
     }

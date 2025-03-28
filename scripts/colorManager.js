@@ -10,20 +10,36 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         alert("You must enable the \"Enable Color-coded Elements\" option in the RS+ options menu first.");
     }
 
-    if (message.action === "elementNotFound") {
-        alert("The element you selected does not currently have a custom color set or the element cannot be modified. Check the RS+ color configuration menu in the options window for the element you are trying to modify.");
-    }
-
-    if (message.action === "uncolorizeElement") {
-        alert("The element you selected has been reset. Refresh the page for changes to apply.");
-    }
-
     // If an element was right clicked and a request message was received from background.js, return the element's JS path
     if (message.action === "getElementPath" && lastRightClickedElement) {
         sendResponse({elementPath: getJSPath(lastRightClickedElement)});
     }
 
-    // If all is successful set the color based on user input
+    // Remove the color from a custom colored element
+    if (message.action === "uncolorizeElement") {
+        let element = document.querySelector(message.elementPath);
+    
+        if (element) {
+            chrome.storage.local.get(["colors"], (data) => {
+                let colors = data.colors || {};
+    
+                // Remove the stored color data
+                if (colors[message.elementPath]) {
+                    delete colors[message.elementPath];
+                    chrome.storage.local.set({colors}, () => {
+                        element.style.backgroundColor = "";
+                    });
+                } else {
+                    alert("The element you selected does not currently have a custom color set or the element cannot be modified. Check the RS+ color configuration menu in the options window for the element you are trying to modify.");
+                }
+            });
+        } else {
+            alert("Something went wrong. This element cannot be modified at this time.");
+            console.warn("[RS+] Element not found:", message.elementPath);
+        }
+    }
+
+    // If all steps were completed successfully in the background script then set the color based on user input
     if (message.action === "colorizeElement") {
         let element = document.querySelector(message.elementPath);
 
@@ -66,13 +82,13 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             }
 
             function saveColor(nickname, color) {
-                chrome.storage.sync.get(["colors"], (data) => {
-                    let colors = data.colors || {}; // Retrieve existing colors or initialize empty object
+                chrome.storage.local.get(["colors"], (data) => {
+                    let colors = data.colors || {}; // Retrieve existing colors or initialize an empty object
 
-                    // Add or update the path entry
-                    colors[message.elementPath] = [nickname, color, element.textContent];
+                    // Add or update the path entry. Use the element value attribute as a fallback element identifier if there is no element text
+                    colors[message.elementPath] = [nickname, color, element.textContent || element.value];
 
-                    chrome.storage.sync.set({colors});
+                    chrome.storage.local.set({colors});
                 });
             }
 
@@ -84,53 +100,77 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
 });
 
-// Apply all saved colors for elements that are present on the page
-chrome.storage.sync.get(['colorCodedState'], function(result) {
+// Apply all saved colors for elements that are present on the page if color coding is enabled
+chrome.storage.local.get(['colorCodedState'], function (result) {
     if (result.colorCodedState) {
-        chrome.storage.sync.get(["colors"], (data) => {
+        chrome.storage.local.get(["colors"], (data) => {
             if (!data.colors) return;
-        
+            console.log(data.colors)
+
+            // Apply the saved colors to each element saved in chrome.storage
             Object.entries(data.colors).forEach(([path, [_, color, savedText]]) => {
                 let element = document.querySelector(path);
-                if (element && element.textContent.trim() === savedText.trim()) {
+                
+                // Validate the element by both JS path and text/value matching
+                if (element && isCorrectElement(element, savedText)) {
                     element.style.backgroundColor = color;
                 }
             });
-        });        
+        });
 
-        // Observe changes to the ticket table and reload colored elements if detected
+        // Observe changes to the ticket table and reload colored elements if changes were detected
         const ticketTable = document.getElementById('bhv-ticketTable');
         if (ticketTable && !ticketTable._mutationObserver2) {
             const observer = new MutationObserver(() => setBIPColors());
-            observer.observe(ticketTable, {childList: true});
+            observer.observe(ticketTable, {childList: true, subtree: true});
             ticketTable._mutationObserver2 = observer;
         }
 
-        // Set colors for each "best in place" element on the page
+        // Function to set colors for best in place elements
         function setBIPColors() {
-            chrome.storage.sync.get(["bipcolors"], (data) => {
+            chrome.storage.local.get(["bipcolors"], (data) => {
                 if (!data.bipcolors) return;
-            
+
+                // Apply the saved colors to each element saved in chrome.storage
                 Object.entries(data.bipcolors).forEach(([text, color]) => {
                     let elements = document.querySelectorAll(".best_in_place");
-                    
+
+                    // Validate the element by text/value matching
                     elements.forEach((element) => {
-                        if (element.textContent.trim() === text.trim()) {
+                        if (isCorrectElement(element, text)) {
                             element.style.backgroundColor = color[0];
                         }
                     });
-                });            
+                });
             });
         }
         setBIPColors();
     }
 });
 
-// Returns a string with the JS path of an element
+// Element text/value validation function
+function isCorrectElement(element, expectedText) {
+    if (!element) return false;
+
+    // Get the text content or value, ensuring it is not null before using replace
+    const actualText = (element.textContent && element.textContent.trim()) || (element.value && element.value.trim()) || '';
+
+    // Normalize the text for a more reliable match
+    const normalizedActualText = actualText.replace(/\s+/g, ' ').trim().toLowerCase();
+    const normalizedExpectedText = expectedText.replace(/\s+/g, ' ').trim().toLowerCase();
+
+    return normalizedActualText.includes(normalizedExpectedText);
+}
+
+// Returns a string with the most reliable JS path of an element
 function getJSPath(element) {
+    if (!element) return "";
+
     let path = [];
     while (element && element.nodeType === Node.ELEMENT_NODE) {
         let selector = element.nodeName.toLowerCase();
+
+        // Use ID if available for uniqueness
         if (element.id) {
             selector += `#${element.id}`;
             path.unshift(selector);
@@ -140,16 +180,23 @@ function getJSPath(element) {
             let sibling = element;
             while (sibling.previousElementSibling) {
                 sibling = sibling.previousElementSibling;
-                if (sibling.nodeName.toLowerCase() === selector) {
+                if (sibling.nodeName.toLowerCase() === element.nodeName.toLowerCase()) {
                     siblingIndex++;
                 }
             }
+
             if (siblingIndex > 1) {
-                selector += `:nth-child(${siblingIndex})`;
+                selector += `:nth-of-type(${siblingIndex})`;
             }
         }
+
         path.unshift(selector);
         element = element.parentNode;
+
+        // Handle Shadow DOM elements
+        if (element && element.nodeType === Node.DOCUMENT_FRAGMENT_NODE && element.host) {
+            element = element.host;
+        }
     }
     return path.join(" > ");
 }

@@ -1,10 +1,10 @@
-chrome.storage.sync.get(null, function (result) {
+chrome.storage.local.get(null, function (result) {
     // Extract all keys that end with "Autofill" dynamically
     const autofillKeys = Object.keys(result).filter(key => key.endsWith('AutofillState'));
     const requiredKeys = ['registerHistoryState', 'pennies', 'nickels', 'dimes', 'quarters', 'ones', 'twos', 'fives', 'tens', 'twenties', 'fifties', 'hundreds', ...autofillKeys];
 
-    // Fetch all the relevant values from chrome.storage.sync
-    chrome.storage.sync.get(requiredKeys, function (result) {
+    // Fetch all the relevant values from chrome.storage.local
+    chrome.storage.local.get(requiredKeys, function (result) {
         // Retrieve and declare existing values from chrome storage
         const {
             registerHistoryState,
@@ -174,7 +174,7 @@ chrome.storage.sync.get(null, function (result) {
                 state[stateName] = autofillCheckbox?.checked || false;
             });
 
-            chrome.storage.sync.set(state);
+            chrome.storage.local.set(state);
         }
     });
 });
