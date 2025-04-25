@@ -69,11 +69,17 @@ a:hover {
     border-radius: 5%;
 }
 
-.main-wrapper {
-    width: 80%;
-    max-width: 1000px;
+.layout-wrapper {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    width: 100%;
+    max-width: 60%;
     margin: 50px auto;
-    padding: 20px;
+}
+
+.main-wrapper {
     background-color: #34495EAF;
     border: solid rgb(12, 32, 68) 10px;
     border-radius: 10px;
@@ -91,6 +97,40 @@ a:hover {
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 }
 
+.previous-updates {
+    position: sticky;
+    top: 20px;
+    margin: 150px 0;
+    padding: 20px;
+    height: fit-content;
+    width: 200px;
+    background-color: #2b3d4e;
+    border: solid rgb(12, 32, 68) 3px;
+    border-radius: 10px;
+    color: #ECF0F1;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.previous-updates ul {
+    margin: 10px;
+}
+
+.previous-updates a {
+    color: #ECF0F1;
+}
+
+.sidebar-header {
+    margin: 10px;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.sidebar-content {
+    margin-left: 20px;
+    margin-top: 5px;
+    font-size: 14px;
+}
+
 .sub-list {
     font-size: 20px;
     font-weight: 500;
@@ -106,7 +146,21 @@ a:hover {
 .picture-example img {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: auto;
-    max-width: 100%;
-    height: auto;
+}
+
+.hotfix {
+    border: 2px white outset;
+    border-radius: 5px;
+    margin: 30px;
+    padding: 10px;
+}
+
+.hotfix-list {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.hotfix-sub-list {
+    font-size: 16px;
+    font-weight: 500;
 }

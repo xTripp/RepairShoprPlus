@@ -1,29 +1,49 @@
 # RepairShopr+ Chrome Extension
 This extension makes changes to how the RepairShopr System functions and adds new features and improvements.
 
+
 ### ---> CURRENT VERSION V1.7 <---
 
 **V1.7 (##/##/##):**
 - NEW FEATURE: Color-coded Elements (BETA)
-  - Adds a RS+ option in the context menu (right-click) on the RepairShopr site that allows for assigning a color to the selected element
-  - All system issues, statuses, and, techs on the ticket page has the ability to be color-coded from the config page linked to the right of the Color-coded option in the RS+ settings menu
-  - TODO export/import color themes only
-- The Quick links feature has been removed and deprecated. If/when a solution is found it will return
+  - Adds a RS+ option to the context menu (right-click) anywhere on the RepairShopr site that allows for assigning a color to the selected element
+  - All system issues, statuses, and techs on the ticket page have the ability to be color-coded from the config page linked to the right of the Color-coded option in the RS+ settings menu
+- RepairShopr+ is now compatible with Mozilla Firefox and Microsoft Edge
+  - Data can be transfered using the backup/import feature released in v1.6 (for more information see version 1.6 page on the RS+ home page)
 - Bug Fixes
-  - Fixed a bug in the closing counts autofill for the POS open/close page where it would input extra currency separators causing RS to enter "0.00"
+  - Fixed a bug in the closing counts autofill for the POS open/close page where it would input extra currency separators causing RS to default to "0.00"
   - Fixed the variance calculator on the POS open/close page to make it more clear
-  - Autofill checkboxes on the POS open/close page now support any number of payment methods instead of just CC and quick (autofill options will need to be re-enabled if previously enabled)
-  - TODO support edge/firefox
-  - TODO update welcome/update pages
-  - TODO add links to previous updates in welcome/update pages
-  - TODO Make 1 or 2 presets for color coding
-  - TODO convert charges and ticket table observers to stop using timeout
-  - TODO error with cloneNode on tickets page
-  - TODO make a debug import/export to just be JSON or XML
-  - TODO sentrix integration during PO and item creation
-  - TODO font color customization
-  - TODO icon customization
+  - Autofill checkboxes on the POS open/close page now support any number of payment methods instead of just CC and quick (autofill checkboxes will need to be reset after the update)
+- Other Improvements
+  - Added a home button to the RS+ settings menu to pull up the RS+ info pages
+  - Added an Update/Welcome page navigation side bar
+  - Added an About page
+- The Quick links feature has been removed and deprecated. If/when a solution is found it will return
 
+
+### TO-DO'S:
+
+**Pre-Update Items:**
+- TODO about page
+- TODO finalize update page
+- TODO add a welcome page link from the extension menu
+- TODO support edge/firefox
+- TODO Make color coding preset
+
+**Bug Tracker:**
+- TODO Fix the debug settings export
+- TODO Fix colorManager.js and colors.js functionality (Probably need to close the colors page when changes are being made on RS because the autosave feature breaks everything)
+- TODO Fix ticket table and charges button observers to load dynamically instead of using a .5s timeout
+- TODO Fix non-critical error Unchecked runtime.lastError: Cannot create item with duplicate id uncolorizeElement that occurs randomly
+- TODO Fix non-critical errors with cloneNode and with addItemButton -> ChangesMade that occur on the tickets page
+- TODO Fix the charges button issue requiring a page refresh and instead update the first ticket to reload the ticket table server-side
+
+**Update Ideas:**
+- TODO MobileSentrix integration for POs and inventory item creation
+- TODO Font color dynamic or manual customization
+
+
+### Previous Updates:
 
 **V1.6.1 Hotfix (3/15/24):**
 - Critical Bug Fixes

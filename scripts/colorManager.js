@@ -105,7 +105,6 @@ chrome.storage.local.get(['colorCodedState'], function (result) {
     if (result.colorCodedState) {
         chrome.storage.local.get(["colors"], (data) => {
             if (!data.colors) return;
-            console.log(data.colors)
 
             // Apply the saved colors to each element saved in chrome.storage
             Object.entries(data.colors).forEach(([path, [_, color, savedText]]) => {
@@ -130,27 +129,26 @@ chrome.storage.local.get(['colorCodedState'], function (result) {
         function setBIPColors() {
             chrome.storage.local.get(["bipcolors"], (data) => {
                 if (!data.bipcolors) return;
-
-                // Apply the saved colors to each element saved in chrome.storage
+                let elements = document.querySelectorAll(".best_in_place");
+        
+                // Apply the saved colors
                 Object.entries(data.bipcolors).forEach(([text, color]) => {
-                    let elements = document.querySelectorAll(".best_in_place");
-
-                    // Validate the element by text/value matching
                     elements.forEach((element) => {
-                        if (isCorrectElement(element, text)) {
+                        if (element.textContent.trim() === text) {
                             element.style.backgroundColor = color[0];
                         }
                     });
                 });
             });
-        }
+        }        
         setBIPColors();
     }
 });
 
 // Element text/value validation function
+// I am commenting out the code for this function because it is not working as intended. Eventually this needs to be fixed with actual element validation code
 function isCorrectElement(element, expectedText) {
-    if (!element) return false;
+/*     if (!element) return false;
 
     // Get the text content or value, ensuring it is not null before using replace
     const actualText = (element.textContent && element.textContent.trim()) || (element.value && element.value.trim()) || '';
@@ -159,7 +157,8 @@ function isCorrectElement(element, expectedText) {
     const normalizedActualText = actualText.replace(/\s+/g, ' ').trim().toLowerCase();
     const normalizedExpectedText = expectedText.replace(/\s+/g, ' ').trim().toLowerCase();
 
-    return normalizedActualText.includes(normalizedExpectedText);
+    return normalizedActualText.includes(normalizedExpectedText); */
+    return true
 }
 
 // Returns a string with the most reliable JS path of an element

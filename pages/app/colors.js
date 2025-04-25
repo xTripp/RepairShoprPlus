@@ -61,28 +61,35 @@ const insertRow = (table, key, nickname, color, text, category) => {
         }
     });
 
-    // Remove color on right-click, second right-click deletes for custom colors
+    // Remove color on right-click, second right-click deletes the element
     colorInput.addEventListener("contextmenu", function(event) {
         event.preventDefault();
+        rightClickCount++;
 
-        if (table === customTable) {
-            rightClickCount++;
+        // Handle each right click appropriately
+        if (rightClickCount === 1) {
+            updateColorStyle(null);
 
-            // Handle each right click appropriately
-            if (rightClickCount === 1) {
-                updateColorStyle(null);
+            if (table === customTable) {
                 customColors[key] = [nickname, null, text];
                 chrome.storage.local.set({colors: customColors});
-            } else if (rightClickCount === 2) {
+            } else {
+                bipcolors[key] = [null, category];
+                chrome.storage.local.set({bipcolors: bipcolors});
+            }
+        } else if (rightClickCount === 2) {
+            // Remove item from correct table
+            if (table === customTable) {
                 delete customColors[key];
                 chrome.storage.local.set({colors: customColors}, () => {
                     row.remove();
                 });
+            } else {
+                delete bipcolors[key];
+                chrome.storage.local.set({bipcolors: bipcolors}, () => {
+                    row.remove();
+                });
             }
-        } else {
-            updateColorStyle(null);
-            bipcolors[key] = [null, category];
-            chrome.storage.local.set({bipcolors: bipcolors});
         }
     });
 
@@ -166,24 +173,30 @@ chrome.storage.local.get(["colors"], function(result) {
 // Save all colors every second
 setInterval(() => {
     chrome.storage.local.get(["bipcolors", "colors"], (result) => {
+        const storageColors = result.colors || {};
 
-        // Make sure custom colors is up to date
-        Object.entries(result.colors || {}).forEach(([key, value]) => {
-            // If the color entry does not exist or has changed, update the local variable
+        // Remove any keys from local customColors that no longer exist in storage
+        Object.keys(customColors).forEach((key) => {
+            if (!(key in storageColors)) {
+                delete customColors[key];
+            }
+        });
+
+        // Update or add new/changed custom colors from storage
+        Object.entries(storageColors).forEach(([key, value]) => {
             if (!customColors[key] || JSON.stringify(customColors[key]) !== JSON.stringify(value)) {
                 customColors[key] = value;
             }
         });
 
-        // Merge the local and saved copy of BIP colors and sync changes for custom colors
-        const updatedBIPColors = {...result.bipcolors, ...bipcolors};
-        const updatedCustomColors = {...customColors};
+        // Merge bipcolors without deleting local entries
+        const updatedBIPColors = { ...result.bipcolors, ...bipcolors };
 
-        // Save the updated color data back to chrome.storage
-        chrome.storage.local.set({bipcolors: updatedBIPColors, colors: updatedCustomColors});
-
-        // Update local objects to reflect the newly merged storage data
+        // Save updated data back to chrome.storage
+        chrome.storage.local.set({
+            bipcolors: updatedBIPColors,
+            colors: customColors
+        });
         bipcolors = updatedBIPColors;
-        customColors = updatedCustomColors;
     });
 }, 1000);
