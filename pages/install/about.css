@@ -26,40 +26,6 @@ body {
     background-size: 100% 0.5%, contain;
 }
 
-h1 {
-    font-size: 36px;
-    text-align: center;
-    margin-bottom: 20px;
-    color: #ffffff;
-}
-
-h2 {
-    font-size: 28px;
-    text-align: center;
-    color: #3498DB;
-    margin-top: 30px;
-    margin-bottom: 20px;
-}
-
-a {
-    color: #fa1f07;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-ul {
-    margin-bottom: 20px;
-    font-size: 22px;
-}
-
-.sub-list li {
-    margin-top: 10px;
-    font-size: 18px;
-}
-
 #logo {
     height: 200px;
     width: 200px;
@@ -94,6 +60,7 @@ ul {
     border: solid rgb(12, 32, 68) 3px;
     border-radius: 10px;
     color: #ECF0F1;
+    font-size: 24px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 }
 
@@ -131,46 +98,35 @@ ul {
     font-size: 14px;
 }
 
-.usage-wrapper {
-    width: 95%;
-    margin: 50px auto;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 10px;
-    font-size: 18px;
+.about-me {
+    margin: 40px;
 }
 
-.usage-steps {
-    width: 29%;
-    padding: 15px;
-    background-color: #2b3d4e;
-    border: solid rgb(12, 32, 68) 3px;
-    border-radius: 10px;
-    color: #ECF0F1;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+.about-rs {
+    margin: 40px;
+    padding: 30px;
+    border: 2px white outset;
+    border-radius: 5px;
+    line-height: 35px;
+}
+
+.about-links {
+    margin: 40px;
+    line-height: 30px;
+}
+
+.links-header {
+    color: goldenrod;
     text-align: center;
+    font-weight: 800;
 }
 
-.usage-steps img {
-    margin-top: 10px;
-    border-radius: 10px;
-    max-width: 100%;
-    height: auto;
+.pop {
+    color:darkorange;
+    text-decoration: underline;
 }
 
-.version-wrapper {
-    width: 95%;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #2b3d4e;
-    border: solid rgb(12, 32, 68) 3px;
-    border-radius: 10px;
-    color: #ECF0F1;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-}
-
-.feature-list {
-    margin: 0 auto;
-    padding-left: 20px;
+.question {
+    font-weight: 800;
+    color: chocolate;
 }

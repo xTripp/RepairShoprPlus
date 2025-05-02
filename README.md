@@ -24,6 +24,7 @@ This extension makes changes to how the RepairShopr System functions and adds ne
 ### TO-DO'S:
 
 **Pre-Update Items:**
+- TODO 1.4 pictures
 - TODO about page
 - TODO finalize update page
 - TODO add a welcome page link from the extension menu
@@ -85,7 +86,7 @@ This extension makes changes to how the RepairShopr System functions and adds ne
 
 **V1.3 (1/17/24):**
 - NEW FEATURE: Force Single-Line Tickets
-  - This option will force tickets to stay on one line for a compact style.
+  - This option will force tickets to stay on one line for a compact style
 - Added settings tool-tips
 
 
@@ -96,7 +97,7 @@ This extension makes changes to how the RepairShopr System functions and adds ne
 
 
 **V1.1 (10/11/23):**
-- NEW FEATURE: QuickLinks
+- NEW FEATURE: QuickLinks (DEPRECATED)
   - QuickLinks will appear to the right of each ticket and will open all links in the ticket's most recent comment
 - NEW FEATURE: Settings Popup Menu
   - Click on the extension icon on the top right of your chrome window for toggleable settings
