@@ -10,9 +10,10 @@
         <div class="layout-wrapper">
             <div class="previous-updates">
                 <p class="sidebar-header"><a href="welcome.html">Home</a></p>
-                <p class="sidebar-header"><a href="update.html">► Update</a></p>
+                <p class="sidebar-header"><a href="update.html">► Latest Update</a></p>
                 <p class="sidebar-header">Older Updates:</p>
                 <ul>
+                    <li class="sidebar-content"><a href="./old_updates/update_1_7.html">Version 1.7</a></li>
                     <li class="sidebar-content"><a href="./old_updates/update_1_6.html">Version 1.6</a></li>
                     <li class="sidebar-content"><a href="./old_updates/update_1_5.html">Version 1.5</a></li>
                     <li class="sidebar-content"><a href="./old_updates/update_1_4.html">Version 1.4</a></li>
@@ -26,40 +27,35 @@
             <div class="main-wrapper">
                 <img src="/../assets/logo/RS+.png" id="logo"/>
                 <div class="content-wrapper">
-                    <h1><u>RepairShopr+ Version 1.6 (3/13/24)</u></h1><br>
-                    <div class="hotfix">
-                        <h2><u>RepairShopr+ Version 1.6.1 Hotfix (3/15/24)</u></h2><br>
-                        <ul class="hotfix-list">
-                            <li>Critical Bug Fixes</li>
-                            <ul class="hotfix-sub-list">
-                                <li>Fixed bug with payment method disappearing and becoming quick payment on first install/update</li>
-                                <li>Fixed bug with default payment method not being set sometimes</li>
-                            </ul>
-                            <li>Add-on Features</li>
-                            <ul class="hotfix-sub-list">
-                                <li>Added a toggle button in the RepairShopr+ main settings popup window for newly introduced payment settings</li>
-                                <li>Added a 'Hide settings' checkbox within payment settings to declutter the payment window</li>
-                            </ul>
-                        </ul>
-                    </div>
+                    <h1><u>RepairShopr+ Version 1.7 (5/13/25)</u></h1><br>
                     <ul>
-                        <li>NEW FEATURE: Payment Page Settings</li>
+                        <li>NEW FEATURE: Color-coded Elements (BETA)</li>
                         <ul class="sub-list">
-                            <li>Adds a settings window to the payments page with options to modify the page</li>
-                            <li>Features a toggleable updated UI option and a default payment option dropdown to set default payment method on page load</li>
+                            <li>Adds a RS+ option to the context menu (right-click) anywhere on the RepairShopr site that allows for assigning a color to the selected element</li>
+                            <li>All system issues, statuses, and techs on the ticket page have the ability to be color-coded from the config page linked to the right of the Color-coded option in the RS+ settings menu</li>
+                            <li>This feature has more improvements coming and more will be released at a later date</li>
                         </ul>
                         <div class="picture-example">
-                            <img src="../../assets/images/Payment Page.png" height="40%" width="80%"/>
+                            <img src="../../../assets/images/Color Context.png" height="55%" width="35%"/>
+                            <img src="../../../assets/images/Color Menu.png" height="35%" width="35%"/>
                         </div>
-                        <li>NEW FEATURE: Import/Export RepairShopr+ Settings</li>
+                        <li>RepairShopr+ is now available on Mozilla Firefox and Microsoft Edge</li>
                         <ul class="sub-list">
-                            <li>Allows RepairShopr+ settings to be exported from one computer and loaded to another for simple setup</li>
+                            <li>Data can be transfered using the backup/import feature released in v1.6 (for more information see <a href="./old_updates/update_1_6.html">version 1.6 page</a> on the RS+ home page)</li>
                         </ul>
-                        <div class="picture-example">
-                            <img src="../../assets/images/Export Example.png" height="35%" width="35%"/>
-                            <img src="../../assets/images/Export Example 2.png" height="35%" width="35%"/>
-                        </div>
-                        <li>Other minor changes</li>
+                        <li>Bug Fixes:</li>
+                        <ul class="sub-list">
+                            <li>Fixed a bug in the closing counts autofill for the POS open/close page where it would input extra currency separators causing RS to default to "0.00"</li>
+                            <li>Fixed the variance calculator on the POS open/close page to make it more clear</li>
+                            <li>Autofill checkboxes on the POS open/close page now support any number of payment methods instead of just CC and quick (autofill checkboxes will need to be reset after the update)</li>
+                        </ul>
+                        <li>Other Improvements</li>
+                        <ul class="sub-list">
+                            <li>Added a home button to the RS+ settings menu to pull up the RS+ info pages</li>
+                            <li>Added an Update/Welcome page navigation side bar</li>
+                            <li>Added an About page</li>
+                        </ul>
+                        <li>The Quick links feature has been removed and deprecated. If/when a solution is found it will return</li>
                     </ul>
                 </div>
             </div>

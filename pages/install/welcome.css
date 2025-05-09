@@ -103,7 +103,7 @@ ul {
     margin: 150px 0;
     padding: 20px;
     height: fit-content;
-    width: 200px;
+    width: 220px;
     background-color: #2b3d4e;
     border: solid rgb(12, 32, 68) 3px;
     border-radius: 10px;
@@ -132,8 +132,9 @@ ul {
 }
 
 .usage-wrapper {
-    width: 95%;
-    margin: 50px auto;
+    width: 98%;
+    height: 450px;
+    margin: 50px 0;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -142,7 +143,11 @@ ul {
 }
 
 .usage-steps {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
     width: 29%;
+    height: 100%;
     padding: 15px;
     background-color: #2b3d4e;
     border: solid rgb(12, 32, 68) 3px;
@@ -152,11 +157,18 @@ ul {
     text-align: center;
 }
 
+.usage-steps p {
+    align-self: flex-start;
+    margin-bottom: auto;
+}
+
 .usage-steps img {
-    margin-top: 10px;
-    border-radius: 10px;
+    align-self: center;
     max-width: 100%;
     height: auto;
+    border-radius: 10px;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .version-wrapper {

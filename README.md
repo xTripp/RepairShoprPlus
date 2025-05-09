@@ -4,11 +4,12 @@ This extension makes changes to how the RepairShopr System functions and adds ne
 
 ### ---> CURRENT VERSION V1.7 <---
 
-**V1.7 (##/##/##):**
+**V1.7 (5/13/25):**
 - NEW FEATURE: Color-coded Elements (BETA)
   - Adds a RS+ option to the context menu (right-click) anywhere on the RepairShopr site that allows for assigning a color to the selected element
   - All system issues, statuses, and techs on the ticket page have the ability to be color-coded from the config page linked to the right of the Color-coded option in the RS+ settings menu
-- RepairShopr+ is now compatible with Mozilla Firefox and Microsoft Edge
+  - This feature has more improvements coming and more will be released at a later date
+- RepairShopr+ is now available on Mozilla Firefox and Microsoft Edge
   - Data can be transfered using the backup/import feature released in v1.6 (for more information see version 1.6 page on the RS+ home page)
 - Bug Fixes
   - Fixed a bug in the closing counts autofill for the POS open/close page where it would input extra currency separators causing RS to default to "0.00"
@@ -24,24 +25,20 @@ This extension makes changes to how the RepairShopr System functions and adds ne
 ### TO-DO'S:
 
 **Pre-Update Items:**
-- TODO 1.4 pictures
-- TODO about page
-- TODO finalize update page
-- TODO add a welcome page link from the extension menu
 - TODO support edge/firefox
-- TODO Make color coding preset
 
 **Bug Tracker:**
 - TODO Fix the debug settings export
 - TODO Fix colorManager.js and colors.js functionality (Probably need to close the colors page when changes are being made on RS because the autosave feature breaks everything)
 - TODO Fix ticket table and charges button observers to load dynamically instead of using a .5s timeout
-- TODO Fix non-critical error Unchecked runtime.lastError: Cannot create item with duplicate id uncolorizeElement that occurs randomly
-- TODO Fix non-critical errors with cloneNode and with addItemButton -> ChangesMade that occur on the tickets page
+- TODO Fix non-critical error Unchecked runtime.lastError: Cannot create item with duplicate id uncolorizeElement that occurs randomly with no stack trace
+- TODO Fix non-critical error with cloneNode and with addItemButton -> ChangesMade that occur on the tickets page
 - TODO Fix the charges button issue requiring a page refresh and instead update the first ticket to reload the ticket table server-side
 
 **Update Ideas:**
-- TODO MobileSentrix integration for POs and inventory item creation
+- TODO Color coding conditional formatting
 - TODO Font color dynamic or manual customization
+- TODO MobileSentrix integration for POs and inventory item creation
 
 
 ### Previous Updates:
