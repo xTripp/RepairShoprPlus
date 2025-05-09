@@ -1,0 +1,76 @@
+{
+    "manifest_version": 2,
+    "name": "RepairShopr+",
+    "description": "RepairShopr service extension for improved functionality and quality features.",
+    "version": "1.7",
+    "icons": {
+        "16": "/assets/logo/icon-16x16.png",
+        "32": "/assets/logo/icon-32x32.png",
+        "48": "/assets/logo/icon-48x48.png",
+        "128": "/assets/logo/icon-128x128.png"
+    },
+    "content_scripts": [
+        {
+            "matches": ["https://*.repairshopr.com/*"],
+            "js": ["/scripts/global.js", "/scripts/colorManager.js"]
+        },
+        {
+            "matches": ["https://*.repairshopr.com/tickets"],
+            "js": ["/scripts/tickets.js", "/scripts/charges.js"],
+            "css": ["/styles/charges.css"]
+        },
+        {
+            "matches": [
+                "https://*.repairshopr.com/tickets/0*",
+                "https://*.repairshopr.com/tickets/1*",
+                "https://*.repairshopr.com/tickets/2*",
+                "https://*.repairshopr.com/tickets/3*",
+                "https://*.repairshopr.com/tickets/4*",
+                "https://*.repairshopr.com/tickets/5*",
+                "https://*.repairshopr.com/tickets/6*",
+                "https://*.repairshopr.com/tickets/7*",
+                "https://*.repairshopr.com/tickets/8*",
+                "https://*.repairshopr.com/tickets/9*"
+            ],
+            "js": ["/scripts/charges.js"],
+            "css": ["/styles/charges.css"]
+        },
+        {
+            "matches": [
+                "https://*.repairshopr.com/registers/*/close",
+                "https://*.repairshopr.com/registers/*/open"
+            ],
+            "js": ["/scripts/pos.js"],
+            "css": ["/styles/ui/checkbox.css"]
+        },
+        {
+            "matches": ["https://*.repairshopr.com/payments/new*"],
+            "js": ["/scripts/payments.js"],
+            "css": [
+                "/styles/payments.css",
+                "/styles/ui/toggle.css",
+                "/styles/ui/checkbox.css"
+            ]
+        }
+    ],
+    "background": {
+        "scripts": ["/scripts/background.js"],
+        "persistent": false
+    },
+    "browser_action": {
+        "default_title": "RepairShopr+ Settings",
+        "default_popup": "/pages/popup/popup.html",
+        "default_icon": {
+            "16": "/assets/logo/icon-16x16.png",
+            "48": "/assets/logo/icon-48x48.png",
+            "128": "/assets/logo/icon-128x128.png"
+        }
+    },
+    "permissions": [
+        "storage",
+        "tabs",
+        "contextMenus",
+        "alarms",
+        "https://*.repairshopr.com/*"
+    ]
+}  

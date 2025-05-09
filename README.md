@@ -10,6 +10,7 @@ This extension makes changes to how the RepairShopr System functions and adds ne
   - All system issues, statuses, and techs on the ticket page have the ability to be color-coded from the config page linked to the right of the Color-coded option in the RS+ settings menu
   - This feature has more improvements coming and more will be released at a later date
 - RepairShopr+ is now available on Mozilla Firefox and Microsoft Edge
+  - Please note that both the Firefox and Edge editions of RS+ are unoptimized. They have been tested for functionality but you may encounter visual bugs and formatting issues (mostly with Firefox)
   - Data can be transfered using the backup/import feature released in v1.6 (for more information see version 1.6 page on the RS+ home page)
 - Bug Fixes
   - Fixed a bug in the closing counts autofill for the POS open/close page where it would input extra currency separators causing RS to default to "0.00"
@@ -25,7 +26,7 @@ This extension makes changes to how the RepairShopr System functions and adds ne
 ### TO-DO'S:
 
 **Pre-Update Items:**
-- TODO support edge/firefox
+- TODO Fix the sidebar formatting on info pages
 
 **Bug Tracker:**
 - TODO Fix the debug settings export
